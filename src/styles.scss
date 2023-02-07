@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: 'Uthmanic';
+    src: url('assets/fonts/KFGQPC_Uthmanic_Script_HAFS_Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Siyamrupali';
+    src: url('assets/fonts/Siyamrupali.ttf');
+}
+
+.bangla-font {
+    font-family: 'Siyamrupali';
+}
+
+.arabic-font {
+    font-family: 'Uthmanic';
+}

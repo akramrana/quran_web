@@ -1,9 +1,9 @@
 <div class="p-4 p-md-5 mt-4 mb-4 rounded text-bg-dark bg-gradient-greenish">
   <div class="col-md-12 px-0 text-center">
-      <h1 class="display-4 fst-italic">وَلَقَدْ يَسَّرْنَا الْقُرْآنَ لِلذِّكْرِ فَهَلْ مِن مُّدَّكِرٍ</h1>
+      <h1 class="display-4 fst-italic arabic-font">وَلَقَدْ يَسَّرْنَا الْقُرْآنَ لِلذِّكْرِ فَهَلْ مِن مُّدَّكِرٍ</h1>
       <p class="lead my-3">Indeed, We have made the Qur’an easy to remember. Is there any who will remember?</p>
       <p class="lead mb-0">
-          <span class="text-white fw-bold">আর আমি কুরআনকে সহজ করে দিয়েছি উপদেশ গ্রহণের জন্য, অতএব কোন উপদেশ গ্রহণকারী আছে কি?</span>
+          <span class="text-white fw-bold bangla-font">আর আমি কুরআনকে সহজ করে দিয়েছি উপদেশ গ্রহণের জন্য, অতএব কোন উপদেশ গ্রহণকারী আছে কি?</span>
       </p>
   </div>
 </div>
@@ -12,14 +12,14 @@
   <div class="col-md-4" *ngFor="let row of surahList;">
     <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
       <div class="col p-4 d-flex flex-column position-static">
-        <strong class="d-inline-block mb-2 text-primary">{{row.name_arabic}}</strong>
+        <span class="d-inline-block mb-2 text-primary arabic-font">{{row.name_arabic}}</span>
         <h3 class="mb-0">{{row.name_complex}}</h3>
         <div class="mb-1 text-muted">{{row.name_english}}</div>
         <p class="card-text">Revelation Place: {{row.revelation_place}}, Revelation Order: {{row.revelation_order}}</p>
         <a [routerLink]="'/pages/quran/surah/'+row.surah_id+'/'+row.name_simple" class="stretched-link">Ayah: {{row.ayat}}</a>
       </div>
       <div class="col-auto d-none d-lg-block">
-        <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: surah name" preserveAspectRatio="xMidYMid slice" focusable="false">
+        <svg class="bd-placeholder-img bangla-font" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: surah name" preserveAspectRatio="xMidYMid slice" focusable="false">
           <title>Placeholder</title>
           <rect width="100%" height="100%" fill="#083F6D"/>
           <text x="25%" y="50%" fill="#eceeef" dy=".3em">{{row.name_bangla}}</text>
