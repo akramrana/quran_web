@@ -22,4 +22,11 @@ export class ApiService {
       }));
   }
 
+  getSurahDetails(getParams?: any) {
+    return this.configService.readRequest(this.baseRoute + '/surah-details.php', getParams)
+      .pipe(map(response => {
+        return response;
+      }));
+  }
+
 }

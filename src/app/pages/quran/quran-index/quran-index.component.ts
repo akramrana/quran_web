@@ -10,8 +10,6 @@ import { first } from 'rxjs/operators';
 })
 export class QuranIndexComponent implements OnInit {
 
-  baseRoute: string = 'home.php';
-
   surahList: any[] = [];
 
   constructor(

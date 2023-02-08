@@ -16,7 +16,7 @@
         <h3 class="mb-0">{{row.name_complex}}</h3>
         <div class="mb-1 text-muted">{{row.name_english}}</div>
         <p class="card-text">Revelation Place: {{row.revelation_place}}<br/>Revelation Order: {{row.revelation_order}}</p>
-        <a [routerLink]="'/pages/quran/surah/'+row.surah_id+'/'+row.name_simple" class="stretched-link">Ayah: {{row.ayat}}</a>
+        <a [routerLink]="'/pages/quran/surah/'+row.surah_id+'/'+row.name_slug" class="stretched-link">Ayah: {{row.ayat}}</a>
       </div>
       <div class="col-auto d-none d-lg-block">
         <svg class="bd-placeholder-img bangla-font" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: surah name" preserveAspectRatio="xMidYMid slice" focusable="false">
