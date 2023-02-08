@@ -1,3 +1,22 @@
-a{
+a {
     text-decoration: none;
+}
+
+/* #Shape Styles
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.diamond-shape {
+    background: #076797;
+    height: 35px;
+    text-align: center;
+    transform: rotate(45deg);
+    width: 35px;
+}
+
+.item-count {
+    color: #fff;
+    display: table-cell;
+    height: 35px;
+    transform: rotate(-45deg);
+    vertical-align: middle;
+    width: 35px;
 }
