@@ -13,6 +13,12 @@
                     {{data.sura?.name_bangla}}
                 </span>
             </p>
+            <div *ngIf="showPlayer">
+                <audio controls>
+                    <source [src]="fileToPlay" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
         </div>
     </div>
 
@@ -21,22 +27,23 @@
             {{row.ayah_key}}
         </div>
         <div class="card-body">
-            <h5 class="card-title arabic-font text-end">
-                <span class="arabic-font circle float-start">{{row.ayah_num}}</span> {{row.text_tashkeel}} 
+            <h5 class="card-title arabic-font text-end fs-2">
+                <span class="arabic-font circle float-start">{{row.ayah_num}}</span> {{row.text_tashkeel}}
             </h5>
 
             <p class="card-text bangla-font text-danger mt-5">{{row.trans}}</p>
             <h5 class="card-title mt-3">{{row.content_en}}</h5>
             <p class="card-text bangla-font mt-3">{{row.content_bn}}</p>
             <div>
-                <button class="btn btn-outline-secondary me-2">
+                <button title="Play" class="btn btn-outline-secondary me-2" (click)="playAudio(row.audio_url)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-play" viewBox="0 0 16 16">
                         <path
                             d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z" />
                     </svg>
                 </button>
-                <button class="btn btn-outline-secondary me-2">
+                <button title="Copy" class="btn btn-outline-secondary me-2"
+                    (click)="copyTextToClipboard(row,data.sura)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-clipboard" viewBox="0 0 16 16">
                         <path
@@ -45,7 +52,7 @@
                             d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
                     </svg>
                 </button>
-                <button class="btn btn-outline-secondary me-2">
+                <button class="btn btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#wordMeaningModal">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-file-word" viewBox="0 0 16 16">
                         <path
@@ -68,6 +75,21 @@
                             d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" />
                     </svg>
                 </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="wordMeaningModal" tabindex="-1" aria-labelledby="wordMeaningModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Word Meaning</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                
             </div>
         </div>
     </div>
