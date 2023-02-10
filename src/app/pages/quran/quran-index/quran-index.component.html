@@ -10,7 +10,7 @@
 </div>
 
 <div class="row mb-2">
-  <div class="col-md-4" *ngFor="let row of surahList;">
+  <div class="col-12 col-sm-6 col-lg-4" *ngFor="let row of surahList;">
     <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
       <div class="col pt-4 ps-4 pe-4 d-flex flex-column position-static">
         <a [routerLink]="'/pages/quran/surah/'+row.surah_id+'/'+row.name_slug">

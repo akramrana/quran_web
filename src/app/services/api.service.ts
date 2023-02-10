@@ -29,4 +29,11 @@ export class ApiService {
       }));
   }
 
+  getWordList(getParams?: any) {
+    return this.configService.readRequest(this.baseRoute + '/word-meaning.php', getParams)
+      .pipe(map(response => {
+        return response;
+      }));
+  }
+
 }

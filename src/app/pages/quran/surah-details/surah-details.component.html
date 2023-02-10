@@ -23,7 +23,7 @@
     </div>
 
     <div class="card mb-2" *ngFor="let row of data.ayah;">
-        <div class="card-header">
+        <div class="card-header" id="target{{row.ayah_num}}">
             {{row.ayah_key}}
         </div>
         <div class="card-body">
@@ -34,8 +34,9 @@
             <p class="card-text bangla-font text-danger mt-5">{{row.trans}}</p>
             <h5 class="card-title mt-3">{{row.content_en}}</h5>
             <p class="card-text bangla-font mt-3">{{row.content_bn}}</p>
-            <div>
-                <button title="Play" class="btn btn-outline-secondary me-2" (click)="playAudio(row.audio_url)">
+            <div class="text-center">
+                <button title="Play" class="btn btn-outline-secondary me-2" (click)="playAyah(row)"
+                    data-bs-toggle="modal" data-bs-target="#audioPlayerModal">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-play" viewBox="0 0 16 16">
                         <path
@@ -52,7 +53,8 @@
                             d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
                     </svg>
                 </button>
-                <button class="btn btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#wordMeaningModal">
+                <button title="Word Meaning" (click)="wordMeaning(row)" class="btn btn-outline-secondary me-2"
+                    data-bs-toggle="modal" data-bs-target="#wordMeaningModal">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-file-word" viewBox="0 0 16 16">
                         <path
@@ -89,7 +91,61 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                
+                <div class="row" dir="rtl">
+                    <div class="col-md-12">
+                        <p class="arabic-font text-center fs-2">{{ayahText}}</p>
+                    </div>
+                    <div class="col-md-4 h-md-250" *ngFor="let row of wordList;">
+                        <div class="card mb-2">
+                            <div class="card-header">
+                                {{row.ayah_key}}
+                            </div>
+                            <div class="card-body">
+                                <p class="arabic-font fs-2">
+                                    {{row.arabic}}
+                                </p>
+                                <p class="text-danger mt-2">{{row.transliteration}}</p>
+                                <p class="mt-2 fs-5">{{row.translation}}</p>
+                                <p class="bangla-font mt-2">{{row.bangla}}</p>
+                                <hr class="bg-danger border-2 border-top">
+                                <div class="text-center">
+                                    <button title="Play" class="btn btn-outline-secondary" (click)="playWord(row)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-play" viewBox="0 0 16 16">
+                                            <path
+                                                d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="audioPlayerModal" tabindex="-1" aria-labelledby="audioPlayerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="audioPlayerModalLabel">Audio Player</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="arabic-font text-center fs-2">{{ayahText}}</p>
+                    </div>
+                    <hr class="bg-danger border-2 border-top">
+                    <div class="col-md-12 h-md-250 text-center">
+                        <audio id="audio" controls>
+                            <source id="audioSource" src="" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
