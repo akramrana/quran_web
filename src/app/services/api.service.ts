@@ -36,4 +36,11 @@ export class ApiService {
       }));
   }
 
+  getTafsir(getParams?: any) {
+    return this.configService.readRequest(this.baseRoute + '/tafsir.php', getParams)
+      .pipe(map(response => {
+        return response;
+      }));
+  }
+
 }

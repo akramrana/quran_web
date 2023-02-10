@@ -22,7 +22,9 @@ export class SurahDetailsComponent implements OnInit {
   audio: any;
   wordList: any[] = [];
   ayahText: string = "";
+  ayahBn: string = "";
   ayahNum: string = "";
+  tafsir:any = {};
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -73,7 +75,7 @@ export class SurahDetailsComponent implements OnInit {
             }
           }
           if (!isExistingSura) {
-            recentlyReadList.push({
+            recentlyReadList.unshift({
               surah_id: this.data.sura.surah_id,
               name_slug: this.data.sura.name_slug,
               name_complex: this.data.sura.name_complex,
@@ -168,9 +170,27 @@ export class SurahDetailsComponent implements OnInit {
     let link = environment.webUrl + 'pages/quran/surah/' + sura.surah_id + '/' + sura.name_slug + ':' + row.ayah_num;
     navigator.clipboard.writeText(link).then(() => {
       //console.log('Async: Copying to clipboard was successful!');
-      this.toastr.success("Link Copied to clipboard!");
+      this.toastr.success("Link Copied to Clipboard!");
     }, function (err) {
       console.error('Async: Could not copy text: ', err);
     });
   }
+
+  showTafsir(row: any) {
+    this.apiService.getTafsir({
+      ayah_index: row.ayah_index
+    })
+      .pipe(first())
+      .subscribe(response => {
+        const data = response.body.data;
+        if (data) {
+          this.ayahText = row.text_tashkeel;
+          this.ayahNum = row.ayah_num;
+          this.ayahBn = row.content_bn;
+          this.tafsir = data;
+        }
+      });
+
+  }
+
 }
