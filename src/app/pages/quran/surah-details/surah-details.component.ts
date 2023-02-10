@@ -62,6 +62,31 @@ export class SurahDetailsComponent implements OnInit {
               this.scroll("target" + nameArr[1]);
             }
           }
+
+          let isExistingSura = false;
+          const recentlyReadList = this.getRecentlyOpenItems();
+          if (recentlyReadList && recentlyReadList.length > 0) {
+            for (let row of recentlyReadList) {
+              if (row.surah_id === this.data.sura.surah_id) {
+                isExistingSura = true;
+              }
+            }
+          }
+          if (!isExistingSura) {
+            recentlyReadList.push({
+              surah_id: this.data.sura.surah_id,
+              name_slug: this.data.sura.name_slug,
+              name_complex: this.data.sura.name_complex,
+              name_english: this.data.sura.name_english,
+              revelation_place: this.data.sura.revelation_place,
+              revelation_order: this.data.sura.revelation_order,
+              name_arabic: this.data.sura.name_arabic,
+              name_bangla: this.data.sura.name_bangla,
+              ayat: this.data.sura.ayat,
+            });
+
+            this.updateRecentList(recentlyReadList);
+          }
         }
       });
 
@@ -74,6 +99,18 @@ export class SurahDetailsComponent implements OnInit {
           this.surahList = data;
         }
       });*/
+  }
+
+  getRecentlyOpenItems(): any[] {
+    const recentlyReads = localStorage.getItem('recently_read');
+    if (recentlyReads) {
+      return JSON.parse(recentlyReads) as any[];
+    }
+    return [];
+  }
+
+  updateRecentList(suraList: any[]) {
+    localStorage.setItem('recently_read', JSON.stringify(suraList));
   }
 
   playAyah(row: any) {

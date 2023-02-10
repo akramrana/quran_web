@@ -8,8 +8,34 @@
     </p>
   </div>
 </div>
-
 <div class="row mb-2">
+  <h5>Recently Read</h5>
+  <div class="row py-2" style="overflow: auto;">
+    <div class="d-flex flex-row flex-nowrap">
+      <div class="col-12 col-sm-6 col-lg-3 mb-2 me-2" *ngFor="let row of recentlyOpenList;">
+        <div class="card">
+          <div class="card-body">
+            <a [routerLink]="'/pages/quran/surah/'+row.surah_id+'/'+row.name_slug">
+              <div class="row">
+                <div class="col-6">
+                  <p class="fs-5">{{row.name_complex}}</p>
+                  <p class="mb-1">{{row.name_english}}</p>
+                  <p class="bangla-font">{{row.name_bangla}}</p>
+                </div>
+                <div class="col-6 text-end">
+                  <p class="text-end arabic-font fs-2">{{row.name_arabic}}</p>
+                  <p>Ayah: {{row.ayat}}</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mb-2">
+  <h5>Surah</h5>
   <div class="col-12 col-sm-6 col-lg-4" *ngFor="let row of surahList;">
     <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
       <div class="col pt-4 ps-4 pe-4 d-flex flex-column position-static">

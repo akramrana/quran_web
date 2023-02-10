@@ -11,6 +11,7 @@ import { first } from 'rxjs/operators';
 export class QuranIndexComponent implements OnInit {
 
   surahList: any[] = [];
+  recentlyOpenList: any[] = [];
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -30,6 +31,18 @@ export class QuranIndexComponent implements OnInit {
           this.surahList = data;
         }
       });
+
+      const recentlyReadList = this.getRecentlyOpenItems();
+      this.recentlyOpenList = recentlyReadList;
+
+  }
+
+  getRecentlyOpenItems(): any[] {
+    const recentlyReads = localStorage.getItem('recently_read');
+    if (recentlyReads) {
+      return JSON.parse(recentlyReads) as any[];
+    }
+    return [];
   }
 
 }

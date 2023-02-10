@@ -13,6 +13,14 @@ export class ConfigSettings {
   ) {
   }
 
+  setRecentlyRead(sura: any) {
+    localStorage.setItem('recently_read', JSON.stringify(sura));
+  }
+
+  getRecentlyRead() {
+    return localStorage.getItem('recently_read');
+  }
+
 
   getBrowserVersion() {
     let ua = navigator.userAgent, tem,
