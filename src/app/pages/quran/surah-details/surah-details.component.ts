@@ -4,6 +4,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { first } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-surah-details',
@@ -21,6 +22,7 @@ export class SurahDetailsComponent implements OnInit {
   audio: any;
   wordList: any[] = [];
   ayahText: string = "";
+  ayahNum: string = "";
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -39,7 +41,6 @@ export class SurahDetailsComponent implements OnInit {
 
     this.id = this._route.snapshot.paramMap.get('id');
     let name = this._route.snapshot.paramMap.get('name');
-    console.log(name);
 
     this.apiService.getSurahDetails({
       surah_id: this.id
@@ -54,8 +55,13 @@ export class SurahDetailsComponent implements OnInit {
           this.fileToPlay = "https://download.quranicaudio.com/qdc/mishari_al_afasy/murattal/" + this.data.sura.surah_id + ".mp3";
           this.cdr.detectChanges();
           this.showPlayer = true;
-          this.scroll("target6")
-          this.toastr.success('Hello world!', 'Toastr fun!');
+          if (name && name.includes(":")) {
+            let nameArr = name.split(":");
+            //console.log(nameArr);
+            if (nameArr[1]) {
+              this.scroll("target" + nameArr[1]);
+            }
+          }
         }
       });
 
@@ -72,6 +78,7 @@ export class SurahDetailsComponent implements OnInit {
 
   playAyah(row: any) {
     this.ayahText = row.text_tashkeel;
+    this.ayahNum = row.ayah_num
     this.wordFileToPlay = row.audio_url;
     this.cdr.detectChanges();
 
@@ -90,7 +97,7 @@ export class SurahDetailsComponent implements OnInit {
   copyTextToClipboard(row: any, sura: any) {
     var text = row.text_tashkeel + "\n" + row.trans + "\n\n" + row.content_en + "\n" + row.content_bn + "\n\n" + sura.name_complex + ",Ayah: " + row.ayah_num;
     navigator.clipboard.writeText(text).then(() => {
-      console.log('Async: Copying to clipboard was successful!');
+      //console.log('Async: Copying to clipboard was successful!');
       this.toastr.success("Ayah Copied");
     }, function (err) {
       console.error('Async: Could not copy text: ', err);
@@ -109,6 +116,7 @@ export class SurahDetailsComponent implements OnInit {
         if (data) {
           this.wordList = data;
           this.ayahText = row.text_tashkeel;
+          this.ayahNum = row.ayah_num
           //console.log(this.wordList);
         }
       });
@@ -117,5 +125,15 @@ export class SurahDetailsComponent implements OnInit {
   scroll(id: string) {
     let el = document.getElementById(id) as HTMLElement;
     el.scrollIntoView();
+  }
+
+  shareLink(sura: any, row: any) {
+    let link = environment.webUrl + 'pages/quran/surah/' + sura.surah_id + '/' + sura.name_slug + ':' + row.ayah_num;
+    navigator.clipboard.writeText(link).then(() => {
+      //console.log('Async: Copying to clipboard was successful!');
+      this.toastr.success("Link Copied to clipboard!");
+    }, function (err) {
+      console.error('Async: Could not copy text: ', err);
+    });
   }
 }

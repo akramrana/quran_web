@@ -2,12 +2,14 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 let url = 'http://localhost/quran_api/';
+let webUrl = 'http://localhost:4200/';
 export const environment = {
   production: false,
   apiurl: url,
   IV:"9498hfvuyr82623z",
   ENC_KEY:"vz178pldcutk2ez4dzo3askdfbak32rz",
   siteKey: '6Lcu9OEdAAAAADkoZqCaDfv_3i6f286yB6aIgTCD',
+  webUrl:webUrl,
 };
 
 /*
