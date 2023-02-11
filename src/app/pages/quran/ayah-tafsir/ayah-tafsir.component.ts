@@ -26,6 +26,7 @@ export class AyahTafsirComponent implements OnInit {
     private _route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     private toastr: ToastrService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -45,6 +46,10 @@ export class AyahTafsirComponent implements OnInit {
         }
       });
 
+  }
+
+  goBack(){
+    this.router.navigate(['/pages/quran/surah/'+this.tafsir.surah_id+'/'+this.tafsir.name_slug+':'+this.ayahId]);
   }
 
 }
