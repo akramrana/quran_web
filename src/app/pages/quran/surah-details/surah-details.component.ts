@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChange } 
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ApiService } from 'src/app/services/api.service';
 import { first } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 
@@ -33,6 +33,7 @@ export class SurahDetailsComponent implements OnInit {
     private _route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     private toastr: ToastrService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -177,7 +178,7 @@ export class SurahDetailsComponent implements OnInit {
   }
 
   showTafsir(row: any) {
-    this.apiService.getTafsir({
+    /*this.apiService.getTafsir({
       ayah_index: row.ayah_index
     })
       .pipe(first())
@@ -189,7 +190,8 @@ export class SurahDetailsComponent implements OnInit {
           this.ayahBn = row.content_bn;
           this.tafsir = data;
         }
-      });
+      });*/
+      this.router.navigate(['/pages/quran/tafsir/'+row.surah_id+'/'+row.ayah_num]);
 
   }
 
