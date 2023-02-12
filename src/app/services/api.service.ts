@@ -43,4 +43,11 @@ export class ApiService {
       }));
   }
 
+  getJuzHizbRubList(getParams?: any) {
+    return this.configService.readRequest(this.baseRoute + '/juz-hizb-rub.php', getParams)
+      .pipe(map(response => {
+        return response;
+      }));
+  }
+
 }

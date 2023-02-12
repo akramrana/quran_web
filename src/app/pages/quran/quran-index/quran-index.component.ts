@@ -11,7 +11,15 @@ import { first } from 'rxjs/operators';
 export class QuranIndexComponent implements OnInit {
 
   surahList: any[] = [];
+  juzList: any[] = [];
+  hizbList: any[] = [];
+  rubList: any[] = [];
   recentlyOpenList: any[] = [];
+
+  isSurahList = true;
+  isJuzList = false;
+  isHizbList = false;
+  isRubList = false;
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -32,8 +40,8 @@ export class QuranIndexComponent implements OnInit {
         }
       });
 
-      const recentlyReadList = this.getRecentlyOpenItems();
-      this.recentlyOpenList = recentlyReadList;
+    const recentlyReadList = this.getRecentlyOpenItems();
+    this.recentlyOpenList = recentlyReadList;
 
   }
 
@@ -43,6 +51,62 @@ export class QuranIndexComponent implements OnInit {
       return JSON.parse(recentlyReads) as any[];
     }
     return [];
+  }
+
+  getJuzHizbRub(type: string) {
+    this.isSurahList = false;
+    if (type == "juz") {
+      this.isRubList = false;
+      this.isHizbList = false;
+      this.isJuzList = true;
+    }
+    if (type == "hizb") {
+      this.isRubList = false;
+      this.isHizbList = true;
+      this.isJuzList = false;
+    }
+    if (type == "rub") {
+      this.isRubList = true;
+      this.isHizbList = false;
+      this.isJuzList = false;
+    }
+
+    this.apiService.getJuzHizbRubList({
+      type: type
+    })
+      .pipe(first())
+      .subscribe(response => {
+        const data = response.body.list;
+        //console.log(data);
+        if (data) {
+          if (type == "juz") {
+            this.juzList = data;
+          }
+          if (type == "hizb") {
+            this.hizbList = data;
+          }
+          if (type == "rub") {
+            this.rubList = data;
+          }
+        }
+      });
+  }
+
+  getHome() {
+    this.isSurahList = true;
+    this.isJuzList = false;
+    this.isHizbList = false;
+    this.isRubList = false;
+
+    this.apiService.getSurahList({})
+      .pipe(first())
+      .subscribe(response => {
+        const data = response.body.list;
+        //console.log(data);
+        if (data) {
+          this.surahList = data;
+        }
+      });
   }
 
 }
