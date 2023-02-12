@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-surah-details',
@@ -24,7 +25,10 @@ export class SurahDetailsComponent implements OnInit {
   ayahText: string = "";
   ayahBn: string = "";
   ayahNum: string = "";
-  tafsir:any = {};
+  tafsir: any = {};
+  selectedSurah: any;
+  ayahList: any[] = [];
+  formGroup: FormGroup | any;
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -34,66 +38,85 @@ export class SurahDetailsComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private toastr: ToastrService,
     private router: Router,
+    private fb: FormBuilder,
   ) { }
 
   ngOnInit(): void {
+
+    this.formGroup = this.fb.group({
+      surahId: [''],
+      ayahId: [''],
+      //q: [''],
+    })
 
     if (this.fileToPlay != '') {
       this.showPlayer = true;
     }
 
-    this.id = this._route.snapshot.paramMap.get('id');
-    let name = this._route.snapshot.paramMap.get('name');
+    this._route.params.subscribe((param) => {
+      //console.log(param);
+      this.id = param['id'];
+      let name = param['name'];
 
-    this.apiService.getSurahDetails({
-      surah_id: this.id
-    })
-      .pipe(first())
-      .subscribe(response => {
-        const data = response.body.data;
-        //console.log(data);
-        if (data) {
-          this.data = data;
-          this.titleService.setTitle(this.data.sura?.name_complex);
-          this.fileToPlay = "https://download.quranicaudio.com/qdc/mishari_al_afasy/murattal/" + this.data.sura.surah_id + ".mp3";
-          this.cdr.detectChanges();
-          this.showPlayer = true;
-          if (name && name.includes(":")) {
-            let nameArr = name.split(":");
-            //console.log(nameArr);
-            if (nameArr[1]) {
-              this.scroll("target" + nameArr[1]);
-            }
-          }
-
-          let isExistingSura = false;
-          const recentlyReadList = this.getRecentlyOpenItems();
-          if (recentlyReadList && recentlyReadList.length > 0) {
-            for (let row of recentlyReadList) {
-              if (row.surah_id === this.data.sura.surah_id) {
-                isExistingSura = true;
+      this.apiService.getSurahDetails({
+        surah_id: this.id
+      })
+        .pipe(first())
+        .subscribe(response => {
+          const data = response.body.data;
+          //console.log(data);
+          if (data) {
+            this.data = data;
+            this.titleService.setTitle(this.data.sura?.name_complex);
+            this.fileToPlay = "https://download.quranicaudio.com/qdc/mishari_al_afasy/murattal/" + this.data.sura.surah_id + ".mp3";
+            //
+            this.showPlayer = true;
+            //console.log(this.fileToPlay);
+            this.cdr.detectChanges();
+            var audio = document.getElementById('surahAudio') as HTMLAudioElement;
+            var source = document.getElementById('surahAudioSource') as HTMLSourceElement;
+            source.src = this.fileToPlay;
+            audio.load();
+            //
+            if (name && name.includes(":")) {
+              let nameArr = name.split(":");
+              //console.log(nameArr);
+              if (nameArr[1]) {
+                this.scroll("target" + nameArr[1]);
               }
             }
-          }
-          if (!isExistingSura) {
-            recentlyReadList.unshift({
-              surah_id: this.data.sura.surah_id,
-              name_slug: this.data.sura.name_slug,
-              name_complex: this.data.sura.name_complex,
-              name_english: this.data.sura.name_english,
-              revelation_place: this.data.sura.revelation_place,
-              revelation_order: this.data.sura.revelation_order,
-              name_arabic: this.data.sura.name_arabic,
-              name_bangla: this.data.sura.name_bangla,
-              ayat: this.data.sura.ayat,
-            });
 
-            this.updateRecentList(recentlyReadList);
-          }
-        }
-      });
+            let isExistingSura = false;
+            const recentlyReadList = this.getRecentlyOpenItems();
+            if (recentlyReadList && recentlyReadList.length > 0) {
+              for (let row of recentlyReadList) {
+                if (row.surah_id === this.data.sura.surah_id) {
+                  isExistingSura = true;
+                }
+              }
+            }
+            if (!isExistingSura) {
+              recentlyReadList.unshift({
+                surah_id: this.data.sura.surah_id,
+                name_slug: this.data.sura.name_slug,
+                name_complex: this.data.sura.name_complex,
+                name_english: this.data.sura.name_english,
+                revelation_place: this.data.sura.revelation_place,
+                revelation_order: this.data.sura.revelation_order,
+                name_arabic: this.data.sura.name_arabic,
+                name_bangla: this.data.sura.name_bangla,
+                ayat: this.data.sura.ayat,
+              });
 
-    /*this.apiService.getSurahList({})
+              this.updateRecentList(recentlyReadList);
+            }
+
+
+          }
+        });
+    })
+
+    this.apiService.getSurahList({})
       .pipe(first())
       .subscribe(response => {
         const data = response.body.list;
@@ -101,7 +124,7 @@ export class SurahDetailsComponent implements OnInit {
         if (data) {
           this.surahList = data;
         }
-      });*/
+      });
   }
 
   getRecentlyOpenItems(): any[] {
@@ -191,8 +214,47 @@ export class SurahDetailsComponent implements OnInit {
           this.tafsir = data;
         }
       });*/
-      this.router.navigate(['/pages/quran/tafsir/'+row.surah_id+'/'+row.ayah_num]);
+    this.router.navigate(['/pages/quran/tafsir/' + row.surah_id + '/' + row.ayah_num]);
 
+  }
+
+  setAyah() {
+    //console.log(this.selectedSurah);
+    this.ayahList = [];
+    this.formGroup.patchValue({
+      ayahId: ""
+    });
+    if (this.selectedSurah) {
+      let totalAyah = Number(this.selectedSurah.ayat);
+      for (let i = 1; i <= totalAyah; i++) {
+        let d = {
+          value: i,
+          name: i,
+        }
+        this.ayahList.push(d);
+      }
+    }
+    //console.log(this.ayahList);
+  }
+
+  search() {
+    Object.keys(this.formGroup.controls).forEach(field => {
+      const control = this.formGroup.get(field);
+      control.markAsTouched({ onlySelf: true });
+    });
+    if (this.formGroup.valid) {
+      try {
+        const postParams = this.formGroup.value;
+        //console.log(postParams);
+        let surah_id = postParams.surahId.surah_id;
+        let name_slug = postParams.surahId.name_slug;
+        let ayah_num = (postParams.ayahId) ? ':' + postParams.ayahId.value : "";
+        //
+        this.router.navigate(['/pages/quran/surah/' + surah_id + '/' + name_slug + ayah_num]);
+      } catch (e) {
+        console.log(e);
+      }
+    }
   }
 
 }
