@@ -15,7 +15,7 @@ export class AyahTafsirComponent implements OnInit {
 
   surahId: number | string | null = 0;
   ayahId: number | string | null = 0;
-  tafsir:any = {};
+  tafsir: any = {};
   @Input() fileToPlay: string = '';
   showPlayer: boolean = false;
 
@@ -31,25 +31,34 @@ export class AyahTafsirComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.surahId = this._route.snapshot.paramMap.get('surahId');
-    this.ayahId = this._route.snapshot.paramMap.get('ayahId');
+    this._route.params.subscribe((param) => {
+      this.surahId = param['surahId'];
+      this.ayahId = param['ayahId'];
 
-    this.apiService.getTafsir({
-      surah_id: this.surahId,
-      ayah_id: this.ayahId,
+      this.apiService.getTafsir({
+        surah_id: this.surahId,
+        ayah_id: this.ayahId,
+      })
+        .pipe(first())
+        .subscribe(response => {
+          const data = response.body.data;
+          if (data) {
+            this.tafsir = data;
+          }
+        });
     })
-      .pipe(first())
-      .subscribe(response => {
-        const data = response.body.data;
-        if (data) {
-          this.tafsir = data;
-        }
-      });
-
   }
 
-  goBack(){
-    this.router.navigate(['/pages/quran/surah/'+this.tafsir.surah_id+'/'+this.tafsir.name_slug+':'+this.ayahId]);
+  goBack() {
+    this.router.navigate(['/pages/quran/surah/' + this.tafsir.surah_id + '/' + this.tafsir.name_slug + ':' + this.ayahId]);
+  }
+
+  prevAyah() {
+    this.router.navigate(['/pages/quran/tafsir/' + this.tafsir.surah_id + '/' + this.tafsir.prev_ayah]);
+  }
+
+  nextAyah() {
+    this.router.navigate(['/pages/quran/tafsir/' + this.tafsir.surah_id + '/' + this.tafsir.next_ayah]);
   }
 
 }

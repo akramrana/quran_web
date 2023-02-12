@@ -13,12 +13,6 @@
                     {{data.sura?.name_bangla}}
                 </span>
             </p>
-            <div *ngIf="showPlayer">
-                <audio id="surahAudio" controls>
-                    <source id="surahAudioSource" src="" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
-            </div>
         </div>
     </div>
 
@@ -62,7 +56,7 @@
                     </h5>
 
                     <p class="card-text bangla-font text-danger mt-5">{{row.trans}}</p>
-                    <h5 class="card-title mt-3">{{row.content_en}}</h5>
+                    <p class="card-title mt-3">{{row.content_en}}</p>
                     <p class="card-text bangla-font mt-3">
                         {{row.content_bn}}
                     </p>
@@ -120,8 +114,14 @@
             </div>
         </div>
     </div>
-
-
+    <div class="text-center pt-1 audio-section" style="position: fixed;bottom: 0;right: 0;left:0;background-color: #076797;">
+        <div *ngIf="showPlayer">
+            <audio id="surahAudio" controls>
+                <source id="surahAudioSource" src="" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </div>
 </div>
 
 <!-- Modal -->
@@ -194,7 +194,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="tafsirModal" tabindex="-1" aria-labelledby="tafsirModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="tafsirModal" tabindex="-1" aria-labelledby="tafsirModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -278,4 +278,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
