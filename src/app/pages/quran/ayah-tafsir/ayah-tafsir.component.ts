@@ -44,6 +44,8 @@ export class AyahTafsirComponent implements OnInit {
           const data = response.body.data;
           if (data) {
             this.tafsir = data;
+
+            this.titleService.setTitle(this.tafsir.name_complex+":"+this.ayahId);
           }
         });
     })

@@ -4,6 +4,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { first } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-juz-hizb-rub',
@@ -30,6 +31,7 @@ export class JuzHizbRubComponent implements OnInit {
     private router: Router,
     private cdr: ChangeDetectorRef,
     private toastr: ToastrService,
+    private titleService: Title,
   ) { }
 
   ngOnInit(): void {
@@ -45,6 +47,8 @@ export class JuzHizbRubComponent implements OnInit {
       else if (this.type == "rub") {
         this.title = "Rub'"
       }
+
+      this.titleService.setTitle(this.title+" "+this.typeId);
 
       this.apiService.getJuzHizbRubDetails({
         type: this.type,
