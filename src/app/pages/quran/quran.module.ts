@@ -7,13 +7,15 @@ import { SurahDetailsComponent } from './surah-details/surah-details.component';
 import { AyahTafsirComponent } from './ayah-tafsir/ayah-tafsir.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { JuzHizbRubComponent } from './juz-hizb-rub/juz-hizb-rub.component';
 
 
 @NgModule({
   declarations: [
     QuranIndexComponent,
     SurahDetailsComponent,
-    AyahTafsirComponent
+    AyahTafsirComponent,
+    JuzHizbRubComponent
   ],
   imports: [
     CommonModule,

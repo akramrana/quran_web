@@ -191,7 +191,8 @@ export class SurahDetailsComponent implements OnInit {
   }
 
   shareLink(sura: any, row: any) {
-    let link = environment.webUrl + 'pages/quran/surah/' + sura.surah_id + '/' + sura.name_slug + ':' + row.ayah_num;
+    //let link = environment.webUrl + 'pages/quran/surah/' + sura.surah_id + '/' + sura.name_slug + ':' + row.ayah_num;
+    let link = environment.webUrl + 'pages/quran/tafsir/' + row.surah_id + '/' + row.ayah_num;
     navigator.clipboard.writeText(link).then(() => {
       //console.log('Async: Copying to clipboard was successful!');
       this.toastr.success("Link Copied to Clipboard!");
@@ -201,19 +202,6 @@ export class SurahDetailsComponent implements OnInit {
   }
 
   showTafsir(row: any) {
-    /*this.apiService.getTafsir({
-      ayah_index: row.ayah_index
-    })
-      .pipe(first())
-      .subscribe(response => {
-        const data = response.body.data;
-        if (data) {
-          this.ayahText = row.text_tashkeel;
-          this.ayahNum = row.ayah_num;
-          this.ayahBn = row.content_bn;
-          this.tafsir = data;
-        }
-      });*/
     this.router.navigate(['/pages/quran/tafsir/' + row.surah_id + '/' + row.ayah_num]);
 
   }

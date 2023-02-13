@@ -50,4 +50,11 @@ export class ApiService {
       }));
   }
 
+  getJuzHizbRubDetails(getParams?: any) {
+    return this.configService.readRequest(this.baseRoute + '/juz-hizb-rub-details.php', getParams)
+      .pipe(map(response => {
+        return response;
+      }));
+  }
+
 }
