@@ -57,4 +57,11 @@ export class ApiService {
       }));
   }
 
+  search(getParams?: any) {
+    return this.configService.readRequest(this.baseRoute + '/search.php', getParams)
+      .pipe(map(response => {
+        return response;
+      }));
+  }
+
 }
