@@ -88,12 +88,25 @@ export class JuzHizbRubComponent implements OnInit {
 
   copyTextToClipboard(row: any) {
     var text = row.text_tashkeel + "\n" + row.trans + "\n\n" + row.content_en + "\n" + row.content_bn + "\n\n" + row.name_complex + ",Ayah: " + row.ayah_num;
-    navigator.clipboard.writeText(text).then(() => {
+    /*navigator.clipboard.writeText(text).then(() => {
       //console.log('Async: Copying to clipboard was successful!');
       this.toastr.success("Ayah Copied");
     }, function (err) {
       console.error('Async: Could not copy text: ', err);
-    });
+    });*/
+    var textArea = document.createElement("textarea") as HTMLTextAreaElement;
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      var successful = document.execCommand('copy');
+      this.toastr.success("Ayah Copied");
+    } catch (err) {
+      console.error('Could not copy text: ', err);
+    }
+    document.body.removeChild(textArea)
   }
 
   wordMeaning(row: any) {
@@ -123,12 +136,25 @@ export class JuzHizbRubComponent implements OnInit {
   shareLink(row: any) {
     //let link = environment.webUrl + 'pages/quran/surah/' + row.surah_id + '/' + row.name_slug + ':' + row.ayah_num;
     let link = environment.webUrl + 'pages/quran/tafsir/' + row.surah_id + '/' + row.ayah_num;
-    navigator.clipboard.writeText(link).then(() => {
+    /*navigator.clipboard.writeText(link).then(() => {
       //console.log('Async: Copying to clipboard was successful!');
       this.toastr.success("Link Copied to Clipboard!");
     }, function (err) {
       console.error('Async: Could not copy text: ', err);
-    });
+    });*/
+    var textArea = document.createElement("textarea") as HTMLTextAreaElement;
+    textArea.value = link;
+    textArea.style.position = "fixed";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      var successful = document.execCommand('copy');
+      this.toastr.success("Link Copied to Clipboard");
+    } catch (err) {
+      console.error('Could not copy link: ', err);
+    }
+    document.body.removeChild(textArea)
   }
 
   showTafsir(row: any) {

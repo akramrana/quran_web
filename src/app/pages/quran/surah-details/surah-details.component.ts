@@ -159,12 +159,25 @@ export class SurahDetailsComponent implements OnInit {
 
   copyTextToClipboard(row: any, sura: any) {
     var text = row.text_tashkeel + "\n" + row.trans + "\n\n" + row.content_en + "\n" + row.content_bn + "\n\n" + sura.name_complex + ",Ayah: " + row.ayah_num;
-    navigator.clipboard.writeText(text).then(() => {
+    var textArea = document.createElement("textarea") as HTMLTextAreaElement;
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      var successful = document.execCommand('copy');
+      this.toastr.success("Ayah Copied");
+    } catch (err) {
+      console.error('Could not copy text: ', err);
+    }
+    document.body.removeChild(textArea)
+    /*navigator.clipboard.writeText(text).then(() => {
       //console.log('Async: Copying to clipboard was successful!');
       this.toastr.success("Ayah Copied");
     }, function (err) {
       console.error('Async: Could not copy text: ', err);
-    });
+    });*/
   }
 
   wordMeaning(row: any) {
@@ -193,12 +206,25 @@ export class SurahDetailsComponent implements OnInit {
   shareLink(sura: any, row: any) {
     //let link = environment.webUrl + 'pages/quran/surah/' + sura.surah_id + '/' + sura.name_slug + ':' + row.ayah_num;
     let link = environment.webUrl + 'pages/quran/tafsir/' + row.surah_id + '/' + row.ayah_num;
-    navigator.clipboard.writeText(link).then(() => {
+    var textArea = document.createElement("textarea") as HTMLTextAreaElement;
+    textArea.value = link;
+    textArea.style.position = "fixed";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      var successful = document.execCommand('copy');
+      this.toastr.success("Link Copied to Clipboard");
+    } catch (err) {
+      console.error('Could not copy link: ', err);
+    }
+    document.body.removeChild(textArea)
+    /*navigator.clipboard.writeText(link).then(() => {
       //console.log('Async: Copying to clipboard was successful!');
       this.toastr.success("Link Copied to Clipboard!");
     }, function (err) {
       console.error('Async: Could not copy text: ', err);
-    });
+    });*/
   }
 
   showTafsir(row: any) {
