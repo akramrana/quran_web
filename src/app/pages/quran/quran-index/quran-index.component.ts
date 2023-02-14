@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ApiService } from 'src/app/services/api.service';
 import { first } from 'rxjs/operators';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-quran-index',
@@ -21,13 +23,21 @@ export class QuranIndexComponent implements OnInit {
   isHizbList = false;
   isRubList = false;
 
+  formGroup: FormGroup | any;
+
   constructor(
     private domSanitizer: DomSanitizer,
     private apiService: ApiService,
     private titleService: Title,
+    private fb: FormBuilder,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
+    this.formGroup = this.fb.group({
+      q: ['', Validators.required],
+    })
+
     this.titleService.setTitle('Al-Quran');
 
     this.apiService.getSurahList({})
@@ -109,4 +119,25 @@ export class QuranIndexComponent implements OnInit {
       });
   }
 
+  search() {
+    Object.keys(this.formGroup.controls).forEach(field => {
+      const control = this.formGroup.get(field);
+      control.markAsTouched({ onlySelf: true });
+    });
+    if (this.formGroup.valid) {
+      try {
+        const postParams = this.formGroup.value;
+        //console.log(postParams);
+        let q = postParams.q;
+        //
+        this.router.navigate(['/pages/quran/search'], {
+          queryParams: { 
+            q: q
+          },
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }
 }

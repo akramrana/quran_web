@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AyahTafsirComponent } from './ayah-tafsir/ayah-tafsir.component';
 import { JuzHizbRubComponent } from './juz-hizb-rub/juz-hizb-rub.component';
 import { QuranIndexComponent } from './quran-index/quran-index.component';
+import { SearchComponent } from './search/search.component';
 import { SurahDetailsComponent } from './surah-details/surah-details.component';
 
 const routes: Routes = [
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: 'juz-hizb-rub/:type/:typeId',
     component: JuzHizbRubComponent,
+  },
+  {
+    path: 'search',
+    component: SearchComponent,
   },
 ];
 

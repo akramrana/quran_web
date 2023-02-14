@@ -8,6 +8,15 @@
     </p>
   </div>
 </div>
+<div class="row justify-content-md-center mb-2">
+  <div class="col col-lg-6 text-center ps-3 pe-3">
+    <form [formGroup]="formGroup" (ngSubmit)="search()">
+      <label class="form-label fs-3">Search</label>
+      <input type="text" class="form-control" name="q" formControlName="q"/>
+      <button class="btn btn-dark mt-2" type="submit">Search</button>
+    </form>
+  </div>
+</div>
 <div class="row mb-2">
   <h5>Recently Read</h5>
   <div class="row py-2" style="overflow: auto;">
