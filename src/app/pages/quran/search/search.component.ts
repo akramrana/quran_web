@@ -123,7 +123,8 @@ export class SearchComponent implements OnInit {
   }
 
   shareLink(row: any) {
-    let link = environment.webUrl + 'pages/quran/tafsir/' + row.surah_id + '/' + row.ayah_num;
+    //let link = environment.webUrl + 'pages/quran/tafsir/' + row.surah_id + '/' + row.ayah_num;
+    let link = environment.webUrl + 'api/v1/share.php?surah_id=' + row.surah_id + '&ayah_id=' + row.ayah_num;
     var textArea = document.createElement("textarea") as HTMLTextAreaElement;
     textArea.value = link;
     textArea.style.position = "fixed";

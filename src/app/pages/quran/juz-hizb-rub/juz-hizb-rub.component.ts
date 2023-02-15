@@ -48,7 +48,7 @@ export class JuzHizbRubComponent implements OnInit {
         this.title = "Rub'"
       }
 
-      this.titleService.setTitle(this.title+" "+this.typeId);
+      this.titleService.setTitle(this.title + " " + this.typeId);
 
       this.apiService.getJuzHizbRubDetails({
         type: this.type,
@@ -135,7 +135,8 @@ export class JuzHizbRubComponent implements OnInit {
 
   shareLink(row: any) {
     //let link = environment.webUrl + 'pages/quran/surah/' + row.surah_id + '/' + row.name_slug + ':' + row.ayah_num;
-    let link = environment.webUrl + 'pages/quran/tafsir/' + row.surah_id + '/' + row.ayah_num;
+    //let link = environment.webUrl + 'pages/quran/tafsir/' + row.surah_id + '/' + row.ayah_num;
+    let link = environment.webUrl + 'api/v1/share.php?surah_id=' + row.surah_id + '&ayah_id=' + row.ayah_num;
     /*navigator.clipboard.writeText(link).then(() => {
       //console.log('Async: Copying to clipboard was successful!');
       this.toastr.success("Link Copied to Clipboard!");
@@ -173,7 +174,7 @@ export class JuzHizbRubComponent implements OnInit {
     }
   }
 
-  goBack(){
+  goBack() {
     this.router.navigate(['/pages/quran/']);
   }
 
