@@ -2,117 +2,140 @@
     <div class="p-4 p-md-5 mt-4 mb-4 rounded text-bg-dark bg-gradient-greenish">
         <div class="col-md-12 px-0 text-center">
             <p class="fs-2 my-3">
-                Surah {{tafsir.name_complex}}: {{tafsir.ayah_num}}
+                Surah {{tafsir.name_complex}}:{{tafsir.ayah_num}}
             </p>
             <p class="fs-1 arabic-font">
                 {{tafsir.text_tashkeel}}
             </p>
 
-            <!-- <div *ngIf="showPlayer">
-                <audio controls>
-                    <source [src]="fileToPlay" type="audio/mpeg">
+            <div *ngIf="showPlayer">
+                <audio id="audio" controls>
+                    <source id="audioSource" src="" type="audio/mpeg">
                     Your browser does not support the audio element.
                 </audio>
-            </div> -->
+            </div>
         </div>
     </div>
 </div>
 <div class="row mb-2">
     <div class="col-12 text-center">
-        <button type="button" class="btn btn-primary" (click)="prevAyah()">Prev Ayah</button>
-        <button type="button" class="btn btn-danger me-2 ms-2" (click)="goBack()">Go Back</button>
-        <button type="button" class="btn btn-primary" (click)="nextAyah()">Next Ayah</button>
+        <button type="button" class="btn btn-outline-primary" (click)="prevAyah()">Prev Ayah</button>
+        <button type="button" class="btn btn-outline-danger me-2 ms-2" (click)="goBack()">Go Back</button>
+        <button type="button" class="btn btn-outline-primary" (click)="nextAyah()">Next Ayah</button>
     </div>
 </div>
 <div class="row mb-2">
-    <div class="col-12">
+    <div class="col-12 col-sm-12 col-lg-2">
+        <div class="card mb-2">
+            <div class="card-header">
+                Search
+            </div>
+            <div class="card-body">
+                <form [formGroup]="formGroup" (ngSubmit)="search()">
+                    <label class="form-label">Surah</label>
+                    <ng-select name="surahId" formControlName="surahId" [items]="surahList" bindLabel="name_simple" placeholder="Surah" [multiple]="false"
+                        [(ngModel)]="selectedSurah" (change)="setAyah()">
+                    </ng-select>
+
+                    <label class="form-label">Ayah</label>
+                    <ng-select name="ayahId" formControlName="ayahId" [items]="ayahList" bindLabel="name" placeholder="Ayah" [multiple]="false">
+                    </ng-select>
+
+                    <hr class="bg-danger border-2 border-top">
+
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-12 col-lg-10">
         <div class="card">
             <div class="card-body">
                 <p class="card-text bangla-font text-danger mb-0">
-                    <span class="bangla-font">
+                    <span class="bangla-font fs-6">
                         {{tafsir.trans}}
                     </span>
                 </p>
-                <p class="card-text mt-3">
+                <p class="card-text mt-3 fs-6">
                     <span>
                         {{tafsir.content_en}}
                     </span>
                 </p>
-                <p class="card-text mb-0">
+                <p class="card-text mb-0 fs-6">
                     <span class="bangla-font">
                         {{tafsir.content_bn}}
                     </span>
                 </p>
             </div>
         </div>
-    </div>
-</div>
-<div class="row mb-2">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <ul class="nav nav-tabs mb-3" id="pills-tab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link bangla-font active" id="pills-ibn_kasir-tab" data-bs-toggle="pill"
-                            data-bs-target="#pills-ibn_kasir" type="button" role="tab" aria-controls="pills-ibn_kasir"
-                            aria-selected="true">ইবনে কাসির</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link bangla-font" id="pills-bayaan-tab" data-bs-toggle="pill"
-                            data-bs-target="#pills-bayaan" type="button" role="tab" aria-controls="pills-bayaan"
-                            aria-selected="false">আহসানুল বায়ান</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link bangla-font" id="pills-fathul_mazid-tab" data-bs-toggle="pill"
-                            data-bs-target="#pills-fathul_mazid" type="button" role="tab"
-                            aria-controls="pills-fathul_mazid" aria-selected="false">ফাতহুল মাজীদ</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link bangla-font" id="pills-tafhim-tab" data-bs-toggle="pill"
-                            data-bs-target="#pills-tafhim" type="button" role="tab" aria-controls="pills-tafhim"
-                            aria-selected="false">তাফহীমুল কুরআন</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link bangla-font" id="pills-fezilalil-tab" data-bs-toggle="pill"
-                            data-bs-target="#pills-fezilalil" type="button" role="tab" aria-controls="pills-fezilalil"
-                            aria-selected="false">ফী যিলালিল কোরআন</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link bangla-font" id="pills-zakaria-tab" data-bs-toggle="pill"
-                            data-bs-target="#pills-zakaria" type="button" role="tab" aria-controls="pills-zakaria"
-                            aria-selected="false">আবু বকর জাকারিয়া</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-jalalayn-tab" data-bs-toggle="pill"
-                            data-bs-target="#pills-jalalayn" type="button" role="tab" aria-controls="jalalayn-contact"
-                            aria-selected="false">Tafsir
-                            Jalalayn</button>
-                    </li>
-                </ul>
-                <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane fade show active" id="pills-ibn_kasir" role="tabpanel"
-                        aria-labelledby="pills-ibn_kasir-tab">
-                        <div class="bangla-font text-justify" [innerHTML]="tafsir.ibn_kasir"></div>
-                    </div>
-                    <div class="tab-pane fade" id="pills-bayaan" role="tabpanel" aria-labelledby="pills-bayaan-tab">
-                        <div class="bangla-font text-justify" [innerHTML]="tafsir.bayaan"></div>
-                    </div>
-                    <div class="tab-pane fade" id="pills-fathul_mazid" role="tabpanel"
-                        aria-labelledby="pills-fathul_mazid-tab">
-                        <div class="bangla-font text-justify" [innerHTML]="tafsir.fathul_mazid"></div>
-                    </div>
-                    <div class="tab-pane fade" id="pills-tafhim" role="tabpanel" aria-labelledby="pills-tafhim-tab">
-                        <div class="bangla-font text-justify" [innerHTML]="tafsir.tafhim"></div>
-                    </div>
-                    <div class="tab-pane fade" id="pills-fezilalil" role="tabpanel"
-                        aria-labelledby="pills-fezilalil-tab">
-                        <div class="bangla-font text-justify" [innerHTML]="tafsir.fezilalil"></div>
-                    </div>
-                    <div class="tab-pane fade" id="pills-zakaria" role="tabpanel" aria-labelledby="pills-zakaria-tab">
-                        <div class="bangla-font text-justify" [innerHTML]="tafsir.zakaria"></div>
-                    </div>
-                    <div class="tab-pane fade" id="pills-jalalayn" role="tabpanel" aria-labelledby="pills-jalalayn-tab">
-                        <div class="text-justify" [innerHTML]="tafsir.jalalayn"></div>
+        <div class="row mt-2 mb-2">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="nav nav-tabs mb-3 fs-6" id="pills-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link bangla-font active" id="pills-ibn_kasir-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-ibn_kasir" type="button" role="tab" aria-controls="pills-ibn_kasir"
+                                    aria-selected="true">ইবনে কাসির</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link bangla-font" id="pills-bayaan-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-bayaan" type="button" role="tab" aria-controls="pills-bayaan"
+                                    aria-selected="false">আহসানুল বায়ান</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link bangla-font" id="pills-fathul_mazid-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-fathul_mazid" type="button" role="tab"
+                                    aria-controls="pills-fathul_mazid" aria-selected="false">ফাতহুল মাজীদ</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link bangla-font" id="pills-tafhim-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-tafhim" type="button" role="tab" aria-controls="pills-tafhim"
+                                    aria-selected="false">তাফহীমুল কুরআন</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link bangla-font" id="pills-fezilalil-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-fezilalil" type="button" role="tab" aria-controls="pills-fezilalil"
+                                    aria-selected="false">ফী যিলালিল কোরআন</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link bangla-font" id="pills-zakaria-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-zakaria" type="button" role="tab" aria-controls="pills-zakaria"
+                                    aria-selected="false">আবু বকর জাকারিয়া</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-jalalayn-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-jalalayn" type="button" role="tab" aria-controls="jalalayn-contact"
+                                    aria-selected="false">Tafsir
+                                    Jalalayn</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content fs-6" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-ibn_kasir" role="tabpanel"
+                                aria-labelledby="pills-ibn_kasir-tab">
+                                <div class="bangla-font text-justify" [innerHTML]="tafsir.ibn_kasir"></div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-bayaan" role="tabpanel" aria-labelledby="pills-bayaan-tab">
+                                <div class="bangla-font text-justify" [innerHTML]="tafsir.bayaan"></div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-fathul_mazid" role="tabpanel"
+                                aria-labelledby="pills-fathul_mazid-tab">
+                                <div class="bangla-font text-justify" [innerHTML]="tafsir.fathul_mazid"></div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-tafhim" role="tabpanel" aria-labelledby="pills-tafhim-tab">
+                                <div class="bangla-font text-justify" [innerHTML]="tafsir.tafhim"></div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-fezilalil" role="tabpanel"
+                                aria-labelledby="pills-fezilalil-tab">
+                                <div class="bangla-font text-justify" [innerHTML]="tafsir.fezilalil"></div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-zakaria" role="tabpanel" aria-labelledby="pills-zakaria-tab">
+                                <div class="bangla-font text-justify" [innerHTML]="tafsir.zakaria"></div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-jalalayn" role="tabpanel" aria-labelledby="pills-jalalayn-tab">
+                                <div class="text-justify" [innerHTML]="tafsir.jalalayn"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

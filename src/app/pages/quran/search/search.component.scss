@@ -1,11 +1,13 @@
 .circle {
-    background: #076797;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    text-align: center;
-    color: #fff;
-    display: block;
-    line-height: 35px;
-    font-size: 14px;
-  }
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  text-align: center;
+  color: #000;
+  display: inline-block;
+  line-height: 35px;
+  font-size: 14px;
+  border: 1px dashed #000;
+  font-family: initial;
+  font-weight: bold;
+}

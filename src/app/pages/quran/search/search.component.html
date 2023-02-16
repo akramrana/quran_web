@@ -31,15 +31,14 @@
                     Surah {{row.name_complex}}
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title arabic-font text-end fs-2">
-                        <span class="arabic-font circle float-start">{{row.ayah_num}}</span>
-                        {{row.text_tashkeel}}
-
+                    <h5 class="card-title text-end fs-2">
+                        <span class="circle me-2">{{row.num_arabic}}</span>
+                        <span class="arabic-font ">{{row.text_tashkeel}}</span>
                     </h5>
 
-                    <p class="card-text bangla-font text-danger mt-5">{{row.trans}}</p>
-                    <p class="card-title mt-3">{{row.content_en}}</p>
-                    <p class="card-text bangla-font mt-3">
+                    <p class="card-text bangla-font text-danger mt-5 fs-6">{{row.trans}}</p>
+                    <p class="card-title mt-3 fs-6">{{row.content_en}}</p>
+                    <p class="card-text bangla-font mt-3 fs-6">
                         {{row.content_bn}}
                     </p>
 
@@ -120,9 +119,9 @@
                                 <p class="arabic-font fs-2">
                                     {{row.arabic}}
                                 </p>
-                                <p class="text-danger mt-2">{{row.transliteration}}</p>
-                                <p class="mt-2 fs-5">{{row.translation}}</p>
-                                <p class="bangla-font mt-2">{{row.bangla}}</p>
+                                <p class="text-danger mt-2 fs-6">{{row.transliteration}}</p>
+                                <p class="mt-2 fs-6">{{row.translation}}</p>
+                                <p class="bangla-font mt-2 fs-6">{{row.bangla}}</p>
                                 <hr class="bg-danger border-2 border-top">
                                 <div class="text-center">
                                     <button title="Play" class="btn btn-outline-secondary" (click)="playWord(row)">
