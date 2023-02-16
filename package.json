@@ -22,6 +22,7 @@
     "@ng-select/ng-select": "^5.1.0",
     "bootstrap": "^5.2.3",
     "crypto-js": "^4.1.1",
+    "ngx-infinite-scroll": "^10.0.0",
     "ngx-toastr": "^14.3.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

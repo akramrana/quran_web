@@ -25,6 +25,10 @@ export class JuzHizbRubComponent implements OnInit {
   next: string = "";
   prev: string = "";
 
+  page = 1;
+  perPage = 50;
+  itShouldLoadMore = true;
+
   constructor(
     private apiService: ApiService,
     private _route: ActivatedRoute,
@@ -53,6 +57,8 @@ export class JuzHizbRubComponent implements OnInit {
       this.apiService.getJuzHizbRubDetails({
         type: this.type,
         typeId: this.typeId,
+        page: this.page,
+        perPage: this.perPage,
       })
         .pipe(first())
         .subscribe(response => {
@@ -176,6 +182,26 @@ export class JuzHizbRubComponent implements OnInit {
 
   goBack() {
     this.router.navigate(['/pages/quran/']);
+  }
+
+  onScroll(): void {
+    if (this.itShouldLoadMore) {
+      this.apiService.getJuzHizbRubDetails({
+        type: this.type,
+        typeId: this.typeId,
+        page: ++this.page,
+        perPage: this.perPage,
+      })
+        .pipe(first())
+        .subscribe(response => {
+          const data: any[] = response.body.list;
+          if (data && data.length > 0) {
+            this.ayahList = data;
+          }else{
+            this.itShouldLoadMore =false;
+          }
+        });
+    }
   }
 
 }

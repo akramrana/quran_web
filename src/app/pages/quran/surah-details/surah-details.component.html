@@ -25,12 +25,13 @@
                 <div class="card-body">
                     <form [formGroup]="formGroup" (ngSubmit)="search()">
                         <label class="form-label">Surah</label>
-                        <ng-select name="surahId" formControlName="surahId" [items]="surahList" bindLabel="name_simple" placeholder="Surah" [multiple]="false"
-                            [(ngModel)]="selectedSurah" (change)="setAyah()">
+                        <ng-select name="surahId" formControlName="surahId" [items]="surahList" bindLabel="name_simple"
+                            placeholder="Surah" [multiple]="false" [(ngModel)]="selectedSurah" (change)="setAyah()">
                         </ng-select>
 
                         <label class="form-label">Ayah</label>
-                        <ng-select name="ayahId" formControlName="ayahId" [items]="ayahList" bindLabel="name" placeholder="Ayah" [multiple]="false">
+                        <ng-select name="ayahId" formControlName="ayahId" [items]="ayahList" bindLabel="name"
+                            placeholder="Ayah" [multiple]="false">
                         </ng-select>
 
                         <!-- <label class="form-label">Terms</label>
@@ -43,14 +44,15 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-sm-12 col-lg-10">
-            <div class="card mb-2" *ngFor="let row of data.ayah;">
+        <div class="col-12 col-sm-12 col-lg-10" infinite-scroll [infiniteScrollDistance]="2"
+            [infiniteScrollThrottle]="1000" (scrolled)="onScroll()">
+            <div class="card mb-2" *ngFor="let row of surahAyahList;">
                 <div class="card-header" id="target{{row.ayah_num}}">
                     {{row.ayah_key}}
                 </div>
                 <div class="card-body">
                     <h5 class="card-title text-end fs-2">
-                        <span class="circle me-2">{{row.num_arabic}}</span> 
+                        <span class="circle me-2">{{row.num_arabic}}</span>
                         <span class="arabic-font ">{{row.text_tashkeel}}</span>
                     </h5>
 
@@ -63,7 +65,7 @@
                     <p class="text-end">
                         <small *ngIf="row.sajdah=='1'" class="badge bg-danger text-wrap">Sajdah</small>
                     </p>
-                    
+
                     <div class="text-center">
                         <button title="Play" class="btn btn-outline-secondary me-2" (click)="playAyah(row)"
                             data-bs-toggle="modal" data-bs-target="#audioPlayerModal">
@@ -113,7 +115,8 @@
             </div>
         </div>
     </div>
-    <div class="text-center pt-1 audio-section" style="position: fixed;bottom: 0;right: 0;left:0;background-color: #076797;">
+    <div class="text-center pt-1 audio-section"
+        style="position: fixed;bottom: 0;right: 0;left:0;background-color: #076797;">
         <div *ngIf="showPlayer">
             <audio id="surahAudio" controls>
                 <source id="surahAudioSource" src="" type="audio/mpeg">

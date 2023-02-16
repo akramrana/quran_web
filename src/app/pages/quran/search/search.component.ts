@@ -22,6 +22,9 @@ export class SearchComponent implements OnInit {
   ayahText: string = "";
   ayahNum: string = "";
   surahNamecomplex: string = "";
+  page = 1;
+  perPage = 50;
+  itShouldLoadMore = true;
 
   constructor(
     private apiService: ApiService,
@@ -35,17 +38,19 @@ export class SearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.formGroup = this.fb.group({
-      q: ['',Validators.required],
+      q: ['', Validators.required],
     })
     this.titleService.setTitle("Search");
     this._route.queryParams.subscribe(params => {
       this.q = params['q'];
       this.formGroup.patchValue({
-        q:this.q
+        q: this.q
       })
 
       this.apiService.search({
         q: this.q,
+        page: this.page,
+        perPage: this.perPage,
       }).pipe(first())
         .subscribe(response => {
           const data = response.body.list;
@@ -156,13 +161,33 @@ export class SearchComponent implements OnInit {
         let q = postParams.q;
         //
         this.router.navigate(['/pages/quran/search'], {
-          queryParams: { 
+          queryParams: {
             q: q
           },
         });
       } catch (e) {
         console.log(e);
       }
+    }
+  }
+
+  onScroll(): void {
+    //console.log("scrolled down!!");
+    //console.log(++this.page);
+    if (this.itShouldLoadMore) {
+      this.apiService.search({
+        q: this.q,
+        page: ++this.page,
+        perPage: this.perPage,
+      }).pipe(first())
+        .subscribe(response => {
+          const data: any[] = response.body.list;
+          if (data && data.length > 0) {
+            this.ayahList.push(...data);
+          }else{
+            this.itShouldLoadMore =false;
+          }
+        });
     }
   }
 

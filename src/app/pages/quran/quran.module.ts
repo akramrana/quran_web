@@ -9,6 +9,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JuzHizbRubComponent } from './juz-hizb-rub/juz-hizb-rub.component';
 import { SearchComponent } from './search/search.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { SearchComponent } from './search/search.component';
     NgSelectModule,
     FormsModule,
     ReactiveFormsModule,
+    InfiniteScrollModule
   ]
 })
 export class QuranModule { }

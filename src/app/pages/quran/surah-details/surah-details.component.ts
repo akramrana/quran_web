@@ -30,6 +30,12 @@ export class SurahDetailsComponent implements OnInit {
   ayahList: any[] = [];
   formGroup: FormGroup | any;
 
+  surahAyahList: any[] = [];
+
+  page = 1;
+  perPage = 50;
+  itShouldLoadMore = true;
+
   constructor(
     private domSanitizer: DomSanitizer,
     private apiService: ApiService,
@@ -58,8 +64,35 @@ export class SurahDetailsComponent implements OnInit {
       this.id = param['id'];
       let name = param['name'];
 
+      if (name && name.includes(":")) {
+        let nameArr = name.split(":");
+        //console.log(nameArr);
+        if (nameArr[1]) {
+          if (nameArr[1] > this.perPage) {
+            if(nameArr[1] > 50 && nameArr[1] < 100){
+              this.perPage = 100;
+            }
+            else if(nameArr[1] >= 100 && nameArr[1] < 150){
+              this.perPage = 150;
+            }
+            else if(nameArr[1] >= 150 && nameArr[1] < 200){
+              this.perPage = 200;
+            }
+            else if(nameArr[1] >= 200 && nameArr[1] < 250){
+              this.perPage = 250;
+            }
+            else if(nameArr[1] >= 250){
+              this.perPage = 300;
+            }
+          }
+        }
+      }
+
       this.apiService.getSurahDetails({
-        surah_id: this.id
+        surah_id: this.id,
+        page: this.page,
+        perPage: this.perPage,
+        suraInfo: 1
       })
         .pipe(first())
         .subscribe(response => {
@@ -67,6 +100,7 @@ export class SurahDetailsComponent implements OnInit {
           //console.log(data);
           if (data) {
             this.data = data;
+            this.surahAyahList = this.data.ayah;
             this.titleService.setTitle(this.data.sura?.name_complex);
             this.fileToPlay = "https://download.quranicaudio.com/qdc/mishari_al_afasy/murattal/" + this.data.sura.surah_id + ".mp3";
             //
@@ -269,6 +303,30 @@ export class SurahDetailsComponent implements OnInit {
       } catch (e) {
         console.log(e);
       }
+    }
+  }
+
+  onScroll(): void {
+    if (this.itShouldLoadMore) {
+      this.apiService.getSurahDetails({
+        surah_id: this.id,
+        page: ++this.page,
+        perPage: this.perPage,
+        suraInfo: 0
+      })
+        .pipe(first())
+        .subscribe(response => {
+          const res: any = response.body.data;
+          //console.log(data);
+          if (res) {
+            const data: any[] = res.ayah;
+            if (data && data.length > 0) {
+              this.surahAyahList.push(...data);
+            } else {
+              this.itShouldLoadMore = false;
+            }
+          }
+        });
     }
   }
 

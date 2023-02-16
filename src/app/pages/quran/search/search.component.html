@@ -16,7 +16,7 @@
                 <div class="card-body">
                     <form [formGroup]="formGroup" (ngSubmit)="search()">
                         <label class="form-label">Terms</label>
-                        <input type="text" class="form-control" name="q" formControlName="q"/>
+                        <input type="text" class="form-control" name="q" formControlName="q" />
 
                         <hr class="bg-danger border-2 border-top">
 
@@ -25,10 +25,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-sm-12 col-lg-10">
+        <div class="col-12 col-sm-12 col-lg-10" infinite-scroll [infiniteScrollDistance]="2"
+            [infiniteScrollThrottle]="1000" (scrolled)="onScroll()">
             <div class="card mb-2" *ngFor="let row of ayahList;">
                 <div class="card-header" id="target{{row.ayah_num}}">
-                    Surah {{row.name_complex}}
+                    Surah {{row.name_complex}}:{{row.ayah_num}}
                 </div>
                 <div class="card-body">
                     <h5 class="card-title text-end fs-2">
@@ -55,8 +56,7 @@
                                     d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z" />
                             </svg>
                         </button>
-                        <button title="Copy" class="btn btn-outline-secondary me-2"
-                            (click)="copyTextToClipboard(row)">
+                        <button title="Copy" class="btn btn-outline-secondary me-2" (click)="copyTextToClipboard(row)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-clipboard" viewBox="0 0 16 16">
                                 <path
@@ -82,8 +82,7 @@
                                     d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z" />
                             </svg>
                         </button>
-                        <button title="Share Link" (click)="shareLink(row)"
-                            class="btn btn-outline-secondary me-2">
+                        <button title="Share Link" (click)="shareLink(row)" class="btn btn-outline-secondary me-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-share" viewBox="0 0 16 16">
                                 <path
