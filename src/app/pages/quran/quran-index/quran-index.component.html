@@ -12,12 +12,29 @@
   <div class="col col-lg-6 text-center ps-3 pe-3">
     <form [formGroup]="formGroup" (ngSubmit)="search()">
       <label class="form-label fs-3">Search</label>
-      <input type="text" class="form-control" name="q" formControlName="q" placeholder="Al-Baqarah, আল-মুলক, 36, 2:255, مَالِكِ يَوْمِ الدِّينِ"/>
+      <input type="text" class="form-control" name="q" formControlName="q"
+        placeholder="Al-Baqarah, আল-মুলক, 36, 2:255, مَالِكِ يَوْمِ الدِّينِ" />
       <button class="btn btn-dark mt-2" type="submit">Search</button>
     </form>
   </div>
 </div>
-<div class="row mb-2">
+<div class="row mb-2" *ngIf="recentlySearchList.length > 0">
+  <h5>Recent Searches</h5>
+  <div class="row py-2" style="overflow: auto;">
+    <div class="d-flex flex-row flex-nowrap">
+      <div class="col-6 col-sm-4 col-lg-1 me-2" *ngFor="let row of recentlySearchList;">
+        <div class="card">
+          <div class="card-body text-center">
+            <a class="link-primary" [routerLink]="'/pages/quran/search'" [queryParams]="{q: row.term}">
+              {{row.term}}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mb-2" *ngIf="recentlyOpenList.length > 0">
   <h5>Recently Read</h5>
   <div class="row py-2" style="overflow: auto;">
     <div class="d-flex flex-row flex-nowrap">

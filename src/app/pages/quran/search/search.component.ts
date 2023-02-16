@@ -53,12 +53,41 @@ export class SearchComponent implements OnInit {
         perPage: this.perPage,
       }).pipe(first())
         .subscribe(response => {
-          const data = response.body.list;
+          const data: any[] = response.body.list;
           if (data) {
             this.ayahList = data;
+            if (data.length > 0) {
+              let isExistingSearch = false;
+              const recentlySearchList = this.getRecentlySearchItems();
+              if (recentlySearchList && recentlySearchList.length > 0) {
+                for (let row of recentlySearchList) {
+                  if (row.term.toLowerCase() === this.q.toLowerCase()) {
+                    isExistingSearch = true;
+                  }
+                }
+              }
+              if (!isExistingSearch) {
+                recentlySearchList.unshift({
+                  term: this.q,
+                });
+                this.updateRecentSearch(recentlySearchList);
+              }
+            }
           }
         });
     });
+  }
+
+  getRecentlySearchItems(): any[] {
+    const recentlySearch = localStorage.getItem('recently_search');
+    if (recentlySearch) {
+      return JSON.parse(recentlySearch) as any[];
+    }
+    return [];
+  }
+
+  updateRecentSearch(searchList: any[]) {
+    localStorage.setItem('recently_search', JSON.stringify(searchList));
   }
 
   playAyah(row: any) {
@@ -184,8 +213,8 @@ export class SearchComponent implements OnInit {
           const data: any[] = response.body.list;
           if (data && data.length > 0) {
             this.ayahList.push(...data);
-          }else{
-            this.itShouldLoadMore =false;
+          } else {
+            this.itShouldLoadMore = false;
           }
         });
     }

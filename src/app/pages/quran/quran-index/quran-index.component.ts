@@ -17,6 +17,7 @@ export class QuranIndexComponent implements OnInit {
   hizbList: any[] = [];
   rubList: any[] = [];
   recentlyOpenList: any[] = [];
+  recentlySearchList: any[] = [];
 
   isSurahList = true;
   isJuzList = false;
@@ -53,6 +54,17 @@ export class QuranIndexComponent implements OnInit {
     const recentlyReadList = this.getRecentlyOpenItems();
     this.recentlyOpenList = recentlyReadList;
 
+    const recentlySearchList = this.getRecentlySearchItems();
+    this.recentlySearchList = recentlySearchList;
+
+  }
+
+  getRecentlySearchItems(): any[] {
+    const recentlySearch = localStorage.getItem('recently_search');
+    if (recentlySearch) {
+      return JSON.parse(recentlySearch) as any[];
+    }
+    return [];
   }
 
   getRecentlyOpenItems(): any[] {
