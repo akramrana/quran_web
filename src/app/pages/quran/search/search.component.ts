@@ -25,6 +25,7 @@ export class SearchComponent implements OnInit {
   page = 1;
   perPage = 50;
   itShouldLoadMore = true;
+  activateScroll = false;
 
   constructor(
     private apiService: ApiService,
@@ -72,6 +73,7 @@ export class SearchComponent implements OnInit {
                 });
                 this.updateRecentSearch(recentlySearchList);
               }
+              this.activateScroll = true;
             }
           }
         });
@@ -203,7 +205,7 @@ export class SearchComponent implements OnInit {
   onScroll(): void {
     //console.log("scrolled down!!");
     //console.log(++this.page);
-    if (this.itShouldLoadMore) {
+    if (this.itShouldLoadMore && this.activateScroll) {
       this.apiService.search({
         q: this.q,
         page: ++this.page,

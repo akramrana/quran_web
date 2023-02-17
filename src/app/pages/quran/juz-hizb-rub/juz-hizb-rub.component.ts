@@ -28,6 +28,7 @@ export class JuzHizbRubComponent implements OnInit {
   page = 1;
   perPage = 50;
   itShouldLoadMore = true;
+  activateScroll = false;
 
   constructor(
     private apiService: ApiService,
@@ -67,6 +68,8 @@ export class JuzHizbRubComponent implements OnInit {
             this.ayahList = data;
             this.next = response.body.next;
             this.prev = response.body.prev;
+
+            this.activateScroll = true;
           }
         });
 
@@ -185,7 +188,7 @@ export class JuzHizbRubComponent implements OnInit {
   }
 
   onScroll(): void {
-    if (this.itShouldLoadMore) {
+    if (this.itShouldLoadMore && this.activateScroll) {
       this.apiService.getJuzHizbRubDetails({
         type: this.type,
         typeId: this.typeId,

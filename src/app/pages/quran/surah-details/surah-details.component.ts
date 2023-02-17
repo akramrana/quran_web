@@ -35,6 +35,7 @@ export class SurahDetailsComponent implements OnInit {
   page = 1;
   perPage = 50;
   itShouldLoadMore = true;
+  activateScroll = false;
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -145,7 +146,7 @@ export class SurahDetailsComponent implements OnInit {
               this.updateRecentList(recentlyReadList);
             }
 
-
+            this.activateScroll = true;
           }
         });
     })
@@ -307,7 +308,8 @@ export class SurahDetailsComponent implements OnInit {
   }
 
   onScroll(): void {
-    if (this.itShouldLoadMore) {
+    if (this.itShouldLoadMore && this.activateScroll) {
+      console.log("scrolled down!!");
       this.apiService.getSurahDetails({
         surah_id: this.id,
         page: ++this.page,
@@ -328,6 +330,10 @@ export class SurahDetailsComponent implements OnInit {
           }
         });
     }
+  }
+
+  onUp(){
+
   }
 
 }
