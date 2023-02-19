@@ -7,6 +7,16 @@
         </p>
     </div>
 </div>
+<div class="row justify-content-md-center mb-2">
+    <div class="col col-lg-6 text-center ps-3 pe-3">
+      <form [formGroup]="formGroup" (ngSubmit)="search()">
+        <label class="form-label fs-3">Search</label>
+        <input type="text" class="form-control" name="q" formControlName="q"
+          placeholder="Enter search term" />
+        <button class="btn btn-dark mt-2" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
 <div class="row mb-2">
     <div class="col-12 col-sm-6 col-lg-4" *ngFor="let row of bookList;">
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">

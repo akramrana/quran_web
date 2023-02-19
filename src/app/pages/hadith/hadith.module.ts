@@ -8,13 +8,15 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { HadithListComponent } from './hadith-list/hadith-list.component';
+import { HadithSearchComponent } from './hadith-search/hadith-search.component';
 
 
 @NgModule({
   declarations: [
     HadithIndexComponent,
     HadithBookComponent,
-    HadithListComponent
+    HadithListComponent,
+    HadithSearchComponent
   ],
   imports: [
     CommonModule,

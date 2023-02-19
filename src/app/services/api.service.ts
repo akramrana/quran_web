@@ -78,4 +78,11 @@ export class ApiService {
       }));
   }
 
+  searchHadith(getParams?: any) {
+    return this.configService.readRequest(this.baseRoute + '/search-hadith.php', getParams)
+      .pipe(map(response => {
+        return response;
+      }));
+  }
+
 }

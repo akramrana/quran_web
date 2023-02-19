@@ -1,0 +1,44 @@
+<div class="col-12">
+    <div class="p-4 p-md-5 mt-4 mb-4 rounded text-bg-dark bg-gradient-greenish">
+        <div class="col-md-12 px-0 text-center">
+            <p class="fs-2 my-3">
+                Search "{{q}}"
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-sm-12 col-lg-2">
+            <div class="card mb-2">
+                <div class="card-header">
+                    Search
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="formGroup" (ngSubmit)="search()">
+                        <label class="form-label">Terms</label>
+                        <input type="text" class="form-control" name="q" formControlName="q" />
+
+                        <hr class="bg-danger border-2 border-top">
+
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-12 col-lg-10" infinite-scroll [infiniteScrollDistance]="2"
+            [infiniteScrollThrottle]="1000" (scrolled)="onScroll()">
+            <div class="card mb-2" *ngFor="let row of hadithList;">
+                <div class="card-header" id="target{{row.hadithnumber}}">
+                    {{row.kitab_name_en}}:{{row.hadithnumber}}
+                </div>
+                <div class="card-body">
+                    <p class="card-text fs-4 arabic-font">
+                        {{row.text_ar}}
+                    </p>
+                    <p class="card-text bangla-font mt-3 fs-6">{{row.text_bn}}</p>
+                    <p class="card-title mt-3 fs-6">{{row.text_en}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

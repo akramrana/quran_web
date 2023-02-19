@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HadithBookComponent } from './hadith-book/hadith-book.component';
 import { HadithIndexComponent } from './hadith-index/hadith-index.component';
 import { HadithListComponent } from './hadith-list/hadith-list.component';
+import { HadithSearchComponent } from './hadith-search/hadith-search.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
   {
     path: 'list/:kitabId/:bookId/:name',
     component: HadithListComponent,
+  },
+  {
+    path: 'search',
+    component: HadithSearchComponent,
   },
 ];
 
