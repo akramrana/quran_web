@@ -64,4 +64,11 @@ export class ApiService {
       }));
   }
 
+  getBookList(getParams?: any) {
+    return this.configService.readRequest(this.baseRoute + '/book.php', getParams)
+      .pipe(map(response => {
+        return response;
+      }));
+  }
+
 }
