@@ -70,5 +70,12 @@ export class ApiService {
         return response;
       }));
   }
+  
+  getHadithList(getParams?: any) {
+    return this.configService.readRequest(this.baseRoute + '/hadith-list.php', getParams)
+      .pipe(map(response => {
+        return response;
+      }));
+  }
 
 }
