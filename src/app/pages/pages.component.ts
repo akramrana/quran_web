@@ -12,4 +12,9 @@ export class PagesComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  hideNav() {
+    let closeBtn = document.getElementById("closeBtn") as HTMLElement;
+    closeBtn.click();
+  }
+
 }
