@@ -32,6 +32,11 @@ const routes: Routes = [
         loadChildren: () => import('./settings/settings.module')
           .then(m => m.SettingsModule),
       },
+      {
+        path: 'references',
+        loadChildren: () => import('./references/references.module')
+          .then(m => m.ReferencesModule),
+      },
     ],
   },
 ];
