@@ -72,7 +72,7 @@ export class HadithSearchComponent implements OnInit {
         let q = postParams.q;
         //
         this.router.navigate(['/pages/hadith/search'], {
-          queryParams: { 
+          queryParams: {
             id: this.id,
             q: q,
           },
@@ -105,6 +105,23 @@ export class HadithSearchComponent implements OnInit {
           }
         });
     }
+  }
+
+  copyTextToClipboard(row: any) {
+    var text = row.text_ar + "\n\n" + row.text_bn + "\n\n" + row.text_en + "\n\n" + row.kitab_name_en + ": " + row.hadithnumber;
+    var textArea = document.createElement("textarea") as HTMLTextAreaElement;
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      var successful = document.execCommand('copy');
+      this.toastr.success("Hadith Copied");
+    } catch (err) {
+      console.error('Could not copy text: ', err);
+    }
+    document.body.removeChild(textArea)
   }
 
 }
