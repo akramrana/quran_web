@@ -61,6 +61,28 @@
   </div>
 </div>
 <div class="row mb-2">
+  <h5>Hadith of the Muhammad PBUH</h5>
+  <div class="row py-2" style="overflow: auto;">
+    <div class="d-flex flex-row flex-nowrap">
+      <div class="col-12 col-sm-6 col-lg-3 mb-2 me-2" *ngFor="let row of kitabList;">
+        <div class="card">
+          <div class="card-body">
+            <a [routerLink]="'/pages/hadith/'+row.nameSlug+'/'+row.id">
+              <div class="row">
+                <div class="col-12 text-center">
+                  <h3 class="mb-0">{{row.nameEn}}</h3>
+                  <p class="mb-2 arabic-font fs-2">{{row.nameAr}}</p>
+                  <p class="mb-2 bangla-font">{{row.nameBn}}</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mb-2">
   <h5>
     <a href="javascript:;" class="link-dark me-2" (click)="getHome()">Surah</a>
     <a href="javascript:;" class="link-secondary me-2" (click)="getJuzHizbRub('juz')">Juz'</a>
