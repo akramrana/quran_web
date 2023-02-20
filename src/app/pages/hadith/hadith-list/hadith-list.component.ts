@@ -38,7 +38,9 @@ export class HadithListComponent implements OnInit {
       this.apiService.getHadithList({
         kitab_id: param['kitabId'],
         book_id: param['bookId'],
-        bookInfo: 1
+        bookInfo: 1,
+        page: this.page,
+        perPage: this.perPage,
       })
         .pipe(first())
         .subscribe(response => {
