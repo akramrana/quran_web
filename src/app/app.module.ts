@@ -7,10 +7,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MyHttpInterceptor } from './interceptors/MyHttpInterceptor';
 import { ToastrModule } from 'ngx-toastr';
+import { LoadingScreenComponent } from './pages/loading-screen/loading-screen.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoadingScreenComponent
   ],
   imports: [
     BrowserModule,

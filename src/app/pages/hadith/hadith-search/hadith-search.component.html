@@ -27,6 +27,11 @@
         </div>
         <div class="col-12 col-sm-12 col-lg-10" infinite-scroll [infiniteScrollDistance]="2"
             [infiniteScrollThrottle]="1000" (scrolled)="onScroll()">
+            <div *ngIf="hadithList.length==0">
+                <p class="fw-lighter text-center">
+                    No hadith found for "{{q}}"
+                </p>
+            </div>
             <div class="card mb-2" *ngFor="let row of hadithList;">
                 <div class="card-header" id="target{{row.hadithnumber}}">
                     {{row.kitab_name_en}}:{{row.hadithnumber}}
@@ -39,8 +44,7 @@
                     <p class="card-title mt-3 fs-6">{{row.text_en}}</p>
 
                     <div class="text-center">
-                        <button title="Copy" class="btn btn-outline-secondary me-2"
-                            (click)="copyTextToClipboard(row)">
+                        <button title="Copy" class="btn btn-outline-secondary me-2" (click)="copyTextToClipboard(row)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-clipboard" viewBox="0 0 16 16">
                                 <path
