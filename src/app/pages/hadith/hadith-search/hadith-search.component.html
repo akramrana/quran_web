@@ -43,6 +43,8 @@
                     <p class="card-text bangla-font mt-3 fs-6">{{row.text_bn}}</p>
                     <p class="card-title mt-3 fs-6">{{row.text_en}}</p>
 
+                    <p class="mt-3 fs-6 text-primary" *ngIf="row.grades"><small>Grade: {{row.grades}}</small></p>
+
                     <div class="text-center">
                         <button title="Copy" class="btn btn-outline-secondary me-2" (click)="copyTextToClipboard(row)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
