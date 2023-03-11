@@ -13,6 +13,10 @@
                     {{data.sura?.name_bangla}}
                 </span>
             </p>
+            <p class="text-center mt-2">
+                <a href="javascript:;" [ngClass]="showTranslation? 'btn-light' : 'btn-dark'" class="btn me-1" (click)="showTranslationBlock()">Translation</a>
+                <a href="javascript:;" [ngClass]="showReading? 'btn-light' : 'btn-dark'" class="btn" (click)="showReadingBlock()">Reading</a>
+            </p>
         </div>
     </div>
 
@@ -44,73 +48,87 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-sm-12 col-lg-10" infinite-scroll [infiniteScrollDistance]="2"
-            [infiniteScrollThrottle]="1000" (scrolled)="onScroll()">
-            <div class="card mb-2" *ngFor="let row of surahAyahList;">
-                <div class="card-header" id="target{{row.ayah_num}}">
-                    {{row.ayah_key}}
+        <div class="col-12 col-sm-12 col-lg-10">
+
+            <div *ngIf="showTranslation">
+                <div infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000"
+                    (scrolled)="onScroll()">
+                    <div class="card mb-2" *ngFor="let row of surahAyahList;">
+                        <div class="card-header" id="target{{row.ayah_num}}">
+                            {{row.ayah_key}}
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-end fs-2">
+                                <span class="arabic-font">{{row.text_tashkeel}}
+                                    <span class="circle me-2">{{row.num_arabic}}</span>
+                                </span>
+                            </h5>
+                            <p class="card-text bangla-font text-danger mt-5 fs-6">{{row.trans}}</p>
+                            <p class="card-title mt-3 fs-6">{{row.content_en}}</p>
+                            <p class="card-text bangla-font mt-3 fs-6">
+                                {{row.content_bn}}
+                            </p>
+                            <p class="text-end">
+                                <small *ngIf="row.sajdah=='1'" class="badge bg-danger text-wrap">Sajdah</small>
+                            </p>
+                            <div class="text-center">
+                                <button title="Play" class="btn btn-outline-secondary me-2" (click)="playAyah(row)"
+                                    data-bs-toggle="modal" data-bs-target="#audioPlayerModal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-play" viewBox="0 0 16 16">
+                                        <path
+                                            d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z" />
+                                    </svg>
+                                </button>
+                                <button title="Copy" class="btn btn-outline-secondary me-2"
+                                    (click)="copyTextToClipboard(row,data.sura)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-clipboard" viewBox="0 0 16 16">
+                                        <path
+                                            d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                                        <path
+                                            d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                                    </svg>
+                                </button>
+                                <button title="Word Meaning" (click)="wordMeaning(row)"
+                                    class="btn btn-outline-secondary me-2" data-bs-toggle="modal"
+                                    data-bs-target="#wordMeaningModal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-file-word" viewBox="0 0 16 16">
+                                        <path
+                                            d="M4.879 4.515a.5.5 0 0 1 .606.364l1.036 4.144.997-3.655a.5.5 0 0 1 .964 0l.997 3.655 1.036-4.144a.5.5 0 0 1 .97.242l-1.5 6a.5.5 0 0 1-.967.01L8 7.402l-1.018 3.73a.5.5 0 0 1-.967-.01l-1.5-6a.5.5 0 0 1 .364-.606z" />
+                                        <path
+                                            d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" />
+                                    </svg>
+                                </button>
+                                <button title="Tafsir" class="btn btn-outline-secondary me-2" (click)="showTafsir(row)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-book" viewBox="0 0 16 16">
+                                        <path
+                                            d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z" />
+                                    </svg>
+                                </button>
+                                <button title="Share Link" (click)="shareLink(data?.sura,row)"
+                                    class="btn btn-outline-secondary me-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-share" viewBox="0 0 16 16">
+                                        <path
+                                            d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title text-end fs-2">
-                        <span class="arabic-font">{{row.text_tashkeel}}
-                            <span class="circle me-2">{{row.num_arabic}}</span>
+            </div>
+            <div *ngIf="showReading">
+                <div class="card">
+                    <div class="card-body fs-2 text-justify">
+                        <span *ngFor="let row of reading;">
+                            <span class="arabic-font">{{row.text_tashkeel}}
+                                <span class="circle ms-2">{{row.num_arabic}}</span>
+                            </span>
                         </span>
-                    </h5>
-
-                    <p class="card-text bangla-font text-danger mt-5 fs-6">{{row.trans}}</p>
-                    <p class="card-title mt-3 fs-6">{{row.content_en}}</p>
-                    <p class="card-text bangla-font mt-3 fs-6">
-                        {{row.content_bn}}
-                    </p>
-
-                    <p class="text-end">
-                        <small *ngIf="row.sajdah=='1'" class="badge bg-danger text-wrap">Sajdah</small>
-                    </p>
-
-                    <div class="text-center">
-                        <button title="Play" class="btn btn-outline-secondary me-2" (click)="playAyah(row)"
-                            data-bs-toggle="modal" data-bs-target="#audioPlayerModal">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-play" viewBox="0 0 16 16">
-                                <path
-                                    d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z" />
-                            </svg>
-                        </button>
-                        <button title="Copy" class="btn btn-outline-secondary me-2"
-                            (click)="copyTextToClipboard(row,data.sura)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-clipboard" viewBox="0 0 16 16">
-                                <path
-                                    d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
-                                <path
-                                    d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
-                            </svg>
-                        </button>
-                        <button title="Word Meaning" (click)="wordMeaning(row)" class="btn btn-outline-secondary me-2"
-                            data-bs-toggle="modal" data-bs-target="#wordMeaningModal">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-file-word" viewBox="0 0 16 16">
-                                <path
-                                    d="M4.879 4.515a.5.5 0 0 1 .606.364l1.036 4.144.997-3.655a.5.5 0 0 1 .964 0l.997 3.655 1.036-4.144a.5.5 0 0 1 .97.242l-1.5 6a.5.5 0 0 1-.967.01L8 7.402l-1.018 3.73a.5.5 0 0 1-.967-.01l-1.5-6a.5.5 0 0 1 .364-.606z" />
-                                <path
-                                    d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" />
-                            </svg>
-                        </button>
-                        <button title="Tafsir" class="btn btn-outline-secondary me-2" (click)="showTafsir(row)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-book" viewBox="0 0 16 16">
-                                <path
-                                    d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z" />
-                            </svg>
-                        </button>
-                        <button title="Share Link" (click)="shareLink(data?.sura,row)"
-                            class="btn btn-outline-secondary me-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-share" viewBox="0 0 16 16">
-                                <path
-                                    d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" />
-                            </svg>
-                        </button>
                     </div>
                 </div>
             </div>

@@ -37,6 +37,11 @@ export class SurahDetailsComponent implements OnInit {
   itShouldLoadMore = true;
   activateScroll = false;
 
+  reading: any = [];
+
+  showTranslation: boolean = true;
+  showReading: boolean = false;
+
   constructor(
     private domSanitizer: DomSanitizer,
     private apiService: ApiService,
@@ -70,19 +75,19 @@ export class SurahDetailsComponent implements OnInit {
         //console.log(nameArr);
         if (nameArr[1]) {
           if (nameArr[1] > this.perPage) {
-            if(nameArr[1] > 50 && nameArr[1] < 100){
+            if (nameArr[1] > 50 && nameArr[1] < 100) {
               this.perPage = 100;
             }
-            else if(nameArr[1] >= 100 && nameArr[1] < 150){
+            else if (nameArr[1] >= 100 && nameArr[1] < 150) {
               this.perPage = 150;
             }
-            else if(nameArr[1] >= 150 && nameArr[1] < 200){
+            else if (nameArr[1] >= 150 && nameArr[1] < 200) {
               this.perPage = 200;
             }
-            else if(nameArr[1] >= 200 && nameArr[1] < 250){
+            else if (nameArr[1] >= 200 && nameArr[1] < 250) {
               this.perPage = 250;
             }
-            else if(nameArr[1] >= 250){
+            else if (nameArr[1] >= 250) {
               this.perPage = 300;
             }
           }
@@ -147,6 +152,8 @@ export class SurahDetailsComponent implements OnInit {
             }
 
             this.activateScroll = true;
+
+            this.reading = this.data.reading;
           }
         });
     })
@@ -234,8 +241,10 @@ export class SurahDetailsComponent implements OnInit {
   }
 
   scroll(id: string) {
-    let el = document.getElementById(id) as HTMLElement;
-    el.scrollIntoView();
+    if (this.showTranslation) {
+      let el = document.getElementById(id) as HTMLElement;
+      el.scrollIntoView();
+    }
   }
 
   shareLink(sura: any, row: any) {
@@ -332,8 +341,18 @@ export class SurahDetailsComponent implements OnInit {
     }
   }
 
-  onUp(){
+  onUp() {
 
+  }
+
+  showTranslationBlock() {
+    this.showReading = false;
+    this.showTranslation = true;
+  }
+
+  showReadingBlock() {
+    this.showReading = true;
+    this.showTranslation = false;
   }
 
 }
