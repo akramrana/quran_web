@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
-import { DomSanitizer, Title } from '@angular/platform-browser';
+import { DomSanitizer, Title, Meta } from '@angular/platform-browser';
 import { ApiService } from 'src/app/services/api.service';
 import { first } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -51,6 +51,7 @@ export class SurahDetailsComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private fb: FormBuilder,
+    private metaTagService: Meta
   ) { }
 
   ngOnInit(): void {
@@ -154,6 +155,27 @@ export class SurahDetailsComponent implements OnInit {
             this.activateScroll = true;
 
             this.reading = this.data.reading;
+
+            this.metaTagService.updateTag({
+              name: 'keywords',
+              content: this.data.sura.name_complex
+            });
+            this.metaTagService.updateTag({
+              name: 'description',
+              content: this.data.sura.name_complex + ',' + this.data.sura.name_bangla + ',' + this.data.sura.name_arabic
+            });
+            this.metaTagService.updateTag({
+              property: "og:title",
+              content: this.data.sura.name_complex
+            })
+            this.metaTagService.updateTag({
+              property: "og:description",
+              content: this.data.sura.name_complex + ',' + this.data.sura.name_bangla + ',' + this.data.sura.name_arabic
+            })
+            this.metaTagService.updateTag({
+              property: "og:url",
+              content: "http://quran.codxplore.com/pages/quran/surah/" + this.data.sura.surah_id + "/" + this.data.sura.name_slug
+            })
           }
         });
     })

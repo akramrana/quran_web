@@ -19,30 +19,44 @@ const routes: Routes = [
   {
     path: 'bukhari/:id',
     component: HadithBookComponent,
+    data:{
+      bookName:'bukhari'
+    }
   },
   {
     path: 'muslim/:id',
     component: HadithBookComponent,
+    data:{
+      bookName:'muslim'
+    }
   },
   {
     path: 'nasai/:id',
     component: HadithBookComponent,
+    data:{
+      bookName:'nasai'
+    }
   },
   {
     path: 'abudawud/:id',
     component: HadithBookComponent,
-  },
-  {
-    path: 'abudawud/:id',
-    component: HadithBookComponent,
+    data:{
+      bookName:'abudawud'
+    }
   },
   {
     path: 'tirmidhi/:id',
     component: HadithBookComponent,
+    data:{
+      bookName:'tirmidhi'
+    }
   },
   {
     path: 'ibnmajah/:id',
     component: HadithBookComponent,
+    data:{
+      bookName:'ibnmajah'
+    }
   },
   {
     path: 'list/:kitabId/:bookId/:name',

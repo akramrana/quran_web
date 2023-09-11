@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Title } from '@angular/platform-browser';
+import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { first } from 'rxjs/operators';
@@ -26,6 +26,7 @@ export class HadithListComponent implements OnInit {
 
   selectedBook: any;
   bookList: any[] = [];
+  bookName: string = "";
 
   constructor(
     private apiService: ApiService,
@@ -34,15 +35,17 @@ export class HadithListComponent implements OnInit {
     private router: Router,
     private _route: ActivatedRoute,
     private toastr: ToastrService,
+    private metaTagService: Meta
   ) { }
 
   ngOnInit(): void {
     this.formGroup = this.fb.group({
-      bid: ['',Validators.required],
+      bid: ['', Validators.required],
     })
     this._route.params.subscribe((param) => {
       this.kitabId = param['kitabId'];
       this.bookId = param['bookId'];
+      this.bookName = param['name'];
       //
       this.apiService.getHadithList({
         kitab_id: param['kitabId'],
@@ -58,9 +61,30 @@ export class HadithListComponent implements OnInit {
           if (data) {
             this.bookInfo = data.bookInfo;
             this.hadithList = data.hadithList;
-            this.titleService.setTitle(this.bookInfo.name_en);
+            this.titleService.setTitle(this.bookInfo.kitab_name_en + ": " +this.bookInfo.name_en);
 
             this.activateScroll = true;
+
+            this.metaTagService.updateTag({
+              name: 'keywords',
+              content: this.bookInfo.kitab_name_en + ": " +this.bookInfo.name_en
+            });
+            this.metaTagService.updateTag({
+              name: 'description',
+              content: this.bookInfo.kitab_name_en + ": " + this.bookInfo.name_en + ", " + this.bookInfo.kitab_name_bn + ": " + this.bookInfo.name_bn + ", " + this.bookInfo.name_ar
+            });
+            this.metaTagService.updateTag({
+              property: "og:title",
+              content: this.bookInfo.kitab_name_en + ": " +this.bookInfo.name_en
+            })
+            this.metaTagService.updateTag({
+              property: "og:description",
+              content: this.bookInfo.kitab_name_en + ": " + this.bookInfo.name_en + ", " + this.bookInfo.kitab_name_bn + ": " + this.bookInfo.name_bn + ", " + this.bookInfo.name_ar
+            })
+            this.metaTagService.updateTag({
+              property: "og:url",
+              content: "http://quran.codxplore.com/pages/hadith/list/" + this.kitabId + "/" + this.bookId + "/" + this.bookName
+            })
           }
         });
 

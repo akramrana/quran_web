@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Title } from '@angular/platform-browser';
+import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { first } from 'rxjs/operators';
@@ -24,9 +24,11 @@ export class HadithBookComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private _route: ActivatedRoute,
+    private metaTagService: Meta
   ) { }
 
   ngOnInit(): void {
+    let bookName = (this._route.snapshot.data['bookName']) ? this._route.snapshot.data['bookName'] : '';
     this.formGroup = this.fb.group({
       q: ['', Validators.required],
     })
@@ -44,6 +46,27 @@ export class HadithBookComponent implements OnInit {
             this.bookDetails = data.bookDetails;
             this.bookList = data.bookList;
             this.titleService.setTitle(this.bookDetails.name_en);
+
+            this.metaTagService.updateTag({
+              name: 'keywords',
+              content: this.bookDetails.name_en
+            });
+            this.metaTagService.updateTag({
+              name: 'description',
+              content: this.bookDetails.name_en + ", " + this.bookDetails.name_bn + ", " + this.bookDetails.name_ar
+            });
+            this.metaTagService.updateTag({
+              property: "og:title",
+              content: this.bookDetails.name_en
+            })
+            this.metaTagService.updateTag({
+              property: "og:description",
+              content: this.bookDetails.name_en + ", " + this.bookDetails.name_bn + ", " + this.bookDetails.name_ar
+            })
+            this.metaTagService.updateTag({
+              property: "og:url",
+              content: "http://quran.codxplore.com/pages/hadith/"+bookName+"/"+this.id
+            })
           }
         });
     })
@@ -60,7 +83,7 @@ export class HadithBookComponent implements OnInit {
         let q = postParams.q;
         //
         this.router.navigate(['/pages/hadith/search'], {
-          queryParams: { 
+          queryParams: {
             id: this.id,
             q: q,
           },

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Meta, Title } from '@angular/platform-browser';
+import { ApiService } from 'src/app/services/api.service';
+import { first } from 'rxjs/operators';
 @Component({
   selector: 'app-hadith-index',
   templateUrl: './hadith-index.component.html',
@@ -7,7 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HadithIndexComponent implements OnInit {
 
-  kitabList: any = [
+  kitabList: any[] = [];
+  /*kitabList: any = [
     {
       id: 5,
       nameEn: "Sahih al-Bukhari",
@@ -50,10 +53,57 @@ export class HadithIndexComponent implements OnInit {
       nameAr: "سنن ابن ماجه",
       nameSlug: "ibnmajah"
     },
-  ];
-  constructor() { }
+  ];*/
+  constructor(
+    private apiService: ApiService,
+    private titleService: Title,
+    private metaTagService: Meta
+  ) {
+  }
 
   ngOnInit(): void {
+    this.titleService.setTitle('The Hadith of the Prophet Muhammad PBUH');
+    this.apiService.getHadithBookList({})
+      .pipe(first())
+      .subscribe(response => {
+        const data = response.body.data;
+        //console.log(data);
+        if (data) {
+          let bookList: any[] = [];
+          for (let dt of data) {
+            let d = {
+              id: dt.id,
+              nameEn: dt.name_en,
+              nameBn: dt.name_bn,
+              nameAr: dt.name_ar,
+              nameSlug: dt.name_slug
+            }
+            bookList.push(d);
+          }
+          this.kitabList = bookList;
+        }
+      });
+
+    this.metaTagService.updateTag({
+      name: 'keywords',
+      content: "Hadith, Prophet Muhammad PBUH"
+    });
+    this.metaTagService.updateTag({
+      name: 'description',
+      content: "The Hadith of the Prophet Muhammad PBUH, মুহাম্মদ সা:-এর হাদিস সমূহ, حديث النبي محمد صلى الله عليه وسلم"
+    });
+    this.metaTagService.updateTag({
+      property: "og:title",
+      content: "The Hadith of the Prophet Muhammad PBUH"
+    })
+    this.metaTagService.updateTag({
+      property: "og:description",
+      content: "The Hadith of the Prophet Muhammad PBUH, মুহাম্মদ সা:-এর হাদিস সমূহ, حديث النبي محمد صلى الله عليه وسلم"
+    })
+    this.metaTagService.updateTag({
+      property: "og:url",
+      content: "http://quran.codxplore.com/pages/hadith"
+    })
   }
 
 }

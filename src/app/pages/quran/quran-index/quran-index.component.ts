@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer, Title } from '@angular/platform-browser';
+import { DomSanitizer, Meta, Title } from '@angular/platform-browser';
 import { ApiService } from 'src/app/services/api.service';
 import { first } from 'rxjs/operators';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -82,6 +82,7 @@ export class QuranIndexComponent implements OnInit {
     private titleService: Title,
     private fb: FormBuilder,
     private router: Router,
+    private metaTagService: Meta
   ) { }
 
   ngOnInit(): void {
@@ -144,6 +145,27 @@ export class QuranIndexComponent implements OnInit {
             }
           });
       }
+    });
+
+    this.metaTagService.updateTag({
+      name: 'keywords',
+      content: "Al-Quran, The Holy Quran"
+    });
+    this.metaTagService.updateTag({
+      name: 'description',
+      content: "Quran, Al-Quran Al-Kareem, Al-Ketab, Al-Furqan, Al-Maw'itha, Al-Thikr, and Al-Noor"
+    });
+    this.metaTagService.updateTag({
+      property: "og:title",
+      content: "Al-Quran, The Holy Quran"
+    })
+    this.metaTagService.updateTag({
+      property: "og:description",
+      content: "Quran, Al-Quran Al-Kareem, Al-Ketab, Al-Furqan, Al-Maw'itha, Al-Thikr, and Al-Noor"
+    })
+    this.metaTagService.updateTag({
+      property:"og:url",
+      content:"http://quran.codxplore.com"
     })
 
   }
