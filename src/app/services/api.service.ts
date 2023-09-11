@@ -85,4 +85,11 @@ export class ApiService {
       }));
   }
 
+  getHadithBookList(getParams?: any) {
+    return this.configService.readRequest(this.baseRoute + '/book-list.php', getParams)
+      .pipe(map(response => {
+        return response;
+      }));
+  }
+
 }

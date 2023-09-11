@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ApiService } from 'src/app/services/api.service';
 import { first } from 'rxjs/operators';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import { debounceTime } from 'rxjs/operators';
 @Component({
   selector: 'app-quran-index',
   templateUrl: './quran-index.component.html',
@@ -26,7 +26,12 @@ export class QuranIndexComponent implements OnInit {
 
   formGroup: FormGroup | any;
 
-  kitabList: any = [
+  kitabList: any[] = [];
+
+  searchSurah = new FormControl('', [Validators.minLength(2)]);
+  searchParams: any = {};
+
+  /*kitabList: any = [
     {
       id: 5,
       nameEn: "Sahih al-Bukhari",
@@ -69,7 +74,7 @@ export class QuranIndexComponent implements OnInit {
       nameAr: "سنن ابن ماجه",
       nameSlug: "ibnmajah"
     },
-  ];
+  ];*/
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -86,6 +91,27 @@ export class QuranIndexComponent implements OnInit {
 
     this.titleService.setTitle('Al-Quran');
 
+    this.apiService.getHadithBookList({})
+      .pipe(first())
+      .subscribe(response => {
+        const data = response.body.data;
+        //console.log(data);
+        if (data) {
+          let bookList: any[] = [];
+          for (let dt of data) {
+            let d = {
+              id: dt.id,
+              nameEn: dt.name_en,
+              nameBn: dt.name_bn,
+              nameAr: dt.name_ar,
+              nameSlug: dt.name_slug
+            }
+            bookList.push(d);
+          }
+          this.kitabList = bookList;
+        }
+      });
+
     this.apiService.getSurahList({})
       .pipe(first())
       .subscribe(response => {
@@ -101,6 +127,24 @@ export class QuranIndexComponent implements OnInit {
 
     const recentlySearchList = this.getRecentlySearchItems();
     this.recentlySearchList = recentlySearchList;
+
+    this.searchSurah.valueChanges.pipe(debounceTime(500)).subscribe((searchValue: string) => {
+      if (!this.searchSurah.invalid) {
+        this.searchParams = {
+          q: searchValue,
+        }
+        this.apiService.getSurahList(this.searchParams)
+          .pipe(first())
+          .subscribe(response => {
+            const data = response.body.list;
+            //console.log(data);
+            this.surahList = [];
+            if (data) {
+              this.surahList = data;
+            }
+          });
+      }
+    })
 
   }
 
@@ -188,7 +232,7 @@ export class QuranIndexComponent implements OnInit {
         let q = postParams.q;
         //
         this.router.navigate(['/pages/quran/search'], {
-          queryParams: { 
+          queryParams: {
             q: q
           },
         });
