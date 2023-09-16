@@ -59,6 +59,13 @@ const routes: Routes = [
     }
   },
   {
+    path: 'muwatta/:id',
+    component: HadithBookComponent,
+    data:{
+      bookName:'muwatta'
+    }
+  },
+  {
     path: 'list/:kitabId/:bookId/:name',
     component: HadithListComponent,
   },
