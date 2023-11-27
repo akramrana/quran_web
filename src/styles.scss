@@ -11,11 +11,23 @@
     src: url('assets/fonts/Siyamrupali.ttf');
 }
 
+@font-face {
+    font-family: 'noorehuda';
+    src: url('assets/fonts/noorehuda.ttf');
+}
+
 .bangla-font {
     font-family: 'Siyamrupali';
 }
 
 .arabic-font {
     font-family: 'Uthmanic';
-    letter-spacing: 0.1rem;
+    letter-spacing: 0.063rem;
+    font-size: 35px;
+}
+
+.indo-arabic-font{
+    font-family: 'noorehuda';
+    // letter-spacing: 0.063rem;
+    font-size: 38px;
 }

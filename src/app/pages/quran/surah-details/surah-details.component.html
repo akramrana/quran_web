@@ -1,7 +1,7 @@
 <div class="col-12">
     <div class="p-4 p-md-5 mt-4 mb-4 rounded text-bg-dark bg-gradient-greenish">
         <div class="col-md-12 px-0 text-center">
-            <h1 class="display-4 fst-italic arabic-font" *ngIf="data.sura?.surah_id!=9">بِسْمِ اللهِ الرَّحْمٰنِ
+            <h1 class="display-4 fst-italic indo-arabic-font" *ngIf="data.sura?.surah_id!=9">بِسْمِ اللهِ الرَّحْمٰنِ
                 الرَّحِيْمِ
             </h1>
             <p class="lead my-3">
@@ -58,8 +58,8 @@
                             {{row.ayah_key}}
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title text-end fs-2">
-                                <span class="arabic-font">{{row.text_tashkeel}}
+                            <h5 class="card-title text-end fs-2" dir="rtl">
+                                <span class="indo-arabic-font">{{row.text_indo}}
                                     <span class="circle me-2">{{row.num_arabic}}</span>
                                 </span>
                             </h5>
@@ -122,10 +122,10 @@
                 </div>
             </div>
             <div *ngIf="showReading">
-                <div class="card">
+                <div class="card" dir="rtl">
                     <div class="card-body fs-2 text-justify">
                         <span *ngFor="let row of reading;">
-                            <span class="arabic-font">{{row.text_tashkeel}}
+                            <span class="indo-arabic-font">{{row.text_indo}}
                                 <span class="circle ms-2">{{row.num_arabic}}</span>
                             </span>
                         </span>
@@ -156,7 +156,7 @@
             <div class="modal-body">
                 <div class="row" dir="rtl">
                     <div class="col-md-12">
-                        <p class="arabic-font text-center fs-2">{{ayahText}}</p>
+                        <p class="indo-arabic-font text-center fs-2">{{ayahText}}</p>
                     </div>
                     <div class="col-md-4 h-md-250" *ngFor="let row of wordList;">
                         <div class="card mb-2">
@@ -164,7 +164,7 @@
                                 {{row.ayah_key}}
                             </div>
                             <div class="card-body">
-                                <p class="arabic-font fs-2">
+                                <p class="indo-arabic-font fs-2">
                                     {{row.arabic}}
                                 </p>
                                 <p class="text-danger mt-2 fs-6">{{row.transliteration}}</p>
@@ -200,7 +200,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="arabic-font text-center fs-2">{{ayahText}}</p>
+                        <p class="indo-arabic-font text-center fs-2">{{ayahText}}</p>
                     </div>
                     <hr class="bg-danger border-2 border-top">
                     <div class="col-md-12 h-md-250 text-center">

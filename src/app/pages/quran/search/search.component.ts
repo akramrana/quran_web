@@ -93,7 +93,7 @@ export class SearchComponent implements OnInit {
   }
 
   playAyah(row: any) {
-    this.ayahText = row.text_tashkeel;
+    this.ayahText = row.text_indo;
     this.ayahNum = row.ayah_num;
     this.surahNamecomplex = row.name_complex;
     this.wordFileToPlay = row.audio_url;
@@ -112,7 +112,7 @@ export class SearchComponent implements OnInit {
   }
 
   copyTextToClipboard(row: any) {
-    var text = row.text_tashkeel + "\n" + row.trans + "\n\n" + row.content_en + "\n" + row.content_bn + "\n\n" + row.name_complex + ",Ayah: " + row.ayah_num;
+    var text = row.text_indo + "\n" + row.trans + "\n\n" + row.content_en + "\n" + row.content_bn + "\n\n" + row.name_complex + ",Ayah: " + row.ayah_num;
     /*navigator.clipboard.writeText(text).then(() => {
       //console.log('Async: Copying to clipboard was successful!');
       this.toastr.success("Ayah Copied");
@@ -145,7 +145,7 @@ export class SearchComponent implements OnInit {
         this.wordList = [];
         if (data) {
           this.wordList = data;
-          this.ayahText = row.text_tashkeel;
+          this.ayahText = row.text_indo;
           this.ayahNum = row.ayah_num;
           this.surahNamecomplex = row.name_complex;
           //console.log(this.wordList);
