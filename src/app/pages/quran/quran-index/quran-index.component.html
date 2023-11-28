@@ -61,7 +61,28 @@
   </div>
 </div>
 <div class="row mb-2">
-  <h5>Hadith of the Muhammad PBUH</h5>
+  <h5>Download our mobile apps</h5>
+  <div class="row py-2" style="overflow: auto;">
+    <div class="d-flex flex-row flex-nowrap">
+      <div class="col-12 col-sm-6 col-lg-3 mb-2 me-2" *ngFor="let row of appList;">
+        <div class="card">
+          <div class="card-body">
+            <a target="_new" href="{{row.url}}">
+              <div class="row">
+                <div class="col-12 text-center">
+                  <img alt="{{row.name}}" class="rounded-circle" src="{{row.img}}"/>
+                  <h3 class="mb-0 mt-3">{{row.name}}</h3>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mb-2">
+  <h5>Hadith of the Muhammad ﷺ</h5>
   <div class="row py-2" style="overflow: auto;">
     <div class="d-flex flex-row flex-nowrap">
       <div class="col-12 col-sm-6 col-lg-3 mb-2 me-2" *ngFor="let row of kitabList;">

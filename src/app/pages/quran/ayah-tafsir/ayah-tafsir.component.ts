@@ -113,10 +113,16 @@ export class AyahTafsirComponent implements OnInit {
     if (this.formGroup.valid) {
       try {
         const postParams = this.formGroup.value;
-        let surah_id = postParams.surahId.surah_id;
-        let ayah_num = postParams.ayahId.value;
-        //
-        this.router.navigate(['/pages/quran/tafsir/' + surah_id + '/' + ayah_num]);
+        //console.log(postParams.surahId);
+        if (postParams.surahId && postParams.surahId.surah_id && postParams.ayahId && postParams.ayahId.value) {
+          let surah_id = postParams.surahId.surah_id;
+          let ayah_num = postParams.ayahId.value;
+          //
+          this.router.navigate(['/pages/quran/tafsir/' + surah_id + '/' + ayah_num]);
+        }
+        else {
+          this.toastr.warning("Please select surah and ayah");
+        }
       } catch (e) {
         console.log(e);
       }

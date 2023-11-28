@@ -190,6 +190,7 @@ export class SearchComponent implements OnInit {
         const postParams = this.formGroup.value;
         //console.log(postParams);
         let q = postParams.q;
+        this.page = 1;
         //
         this.router.navigate(['/pages/quran/search'], {
           queryParams: {
