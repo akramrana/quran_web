@@ -18,6 +18,7 @@ export class QuranIndexComponent implements OnInit {
   rubList: any[] = [];
   recentlyOpenList: any[] = [];
   recentlySearchList: any[] = [];
+  tagList: any[] = [];
 
   isSurahList = true;
   isJuzList = false;
@@ -76,36 +77,36 @@ export class QuranIndexComponent implements OnInit {
     },
   ];*/
 
-  appList:any[] = [
+  appList: any[] = [
     {
-      id:1,
-      name:"Quran Tafsir English Bangla",
-      url:"https://play.google.com/store/apps/details?id=com.akramhossain.quranulkarim&hl=en&gl=US",
-      img:"https://play-lh.googleusercontent.com/Zr-PWf-iRVCCCjx7PpqUCrIKT7EkxJ_jVCg_9s6OyLZavBsQlQCkRIU4E8xCJpE51Q=w240-h480"
+      id: 1,
+      name: "Quran Tafsir English Bangla",
+      url: "https://play.google.com/store/apps/details?id=com.akramhossain.quranulkarim&hl=en&gl=US",
+      img: "https://play-lh.googleusercontent.com/Zr-PWf-iRVCCCjx7PpqUCrIKT7EkxJ_jVCg_9s6OyLZavBsQlQCkRIU4E8xCJpE51Q=w240-h480"
     },
     {
-      id:2,
-      name:"Sahih al-Bukhari (সহীহ বুখারী)",
-      url:"https://play.google.com/store/apps/details?id=com.akramhossin.bukharisharif&hl=en&gl=US",
-      img:"https://play-lh.googleusercontent.com/0fiVEvTZAFdvkAhhPWK7Npr1NOj0r1X5NIuR0kPHftl2ceIMGcJuXZPkF2boH2upMoU=w240-h480"
+      id: 2,
+      name: "Sahih al-Bukhari (সহীহ বুখারী)",
+      url: "https://play.google.com/store/apps/details?id=com.akramhossin.bukharisharif&hl=en&gl=US",
+      img: "https://play-lh.googleusercontent.com/0fiVEvTZAFdvkAhhPWK7Npr1NOj0r1X5NIuR0kPHftl2ceIMGcJuXZPkF2boH2upMoU=w240-h480"
     },
     {
-      id:3,
-      name:"Sahih Muslim (সহীহ মুসলিম)",
-      url:"https://play.google.com/store/apps/details?id=com.akramhossin.sahihmuslim&hl=en&gl=US",
-      img:"https://play-lh.googleusercontent.com/Q4LcZPKumFRYj8EDKAvY6wchqi-TvNC4Kmaiez7ZxjaSevJc8H9dqI86cxnQ9LOef3Y=w240-h480"
+      id: 3,
+      name: "Sahih Muslim (সহীহ মুসলিম)",
+      url: "https://play.google.com/store/apps/details?id=com.akramhossin.sahihmuslim&hl=en&gl=US",
+      img: "https://play-lh.googleusercontent.com/Q4LcZPKumFRYj8EDKAvY6wchqi-TvNC4Kmaiez7ZxjaSevJc8H9dqI86cxnQ9LOef3Y=w240-h480"
     },
     {
-      id:4,
-      name:"Sunan and Tirmidhi",
-      url:"https://play.google.com/store/apps/details?id=com.akramhossin.nasaiabudawudibnmajahtirmidhi&hl=en&gl=US",
-      img:"https://play-lh.googleusercontent.com/vhxTyhbYtAi_Fj_pwiCmjYKkW3zwUntNNaNzL00bQQzbLstehaMEnaeYbGPXfXiioFS1=w240-h480"
+      id: 4,
+      name: "Sunan and Tirmidhi",
+      url: "https://play.google.com/store/apps/details?id=com.akramhossin.nasaiabudawudibnmajahtirmidhi&hl=en&gl=US",
+      img: "https://play-lh.googleusercontent.com/vhxTyhbYtAi_Fj_pwiCmjYKkW3zwUntNNaNzL00bQQzbLstehaMEnaeYbGPXfXiioFS1=w240-h480"
     },
     {
-      id:5,
-      name:"Islamic Video",
-      url:"https://play.google.com/store/apps/details?id=com.akramhossain.islamicvideo&hl=en&gl=US",
-      img:"https://play-lh.googleusercontent.com/8Hz73nssIzVBwOfI5U5frPs4zAjTEsmgOFiAhJAzijyb8kIHW80WNC0r4rGhz1OQrA=w240-h480"
+      id: 5,
+      name: "Islamic Video",
+      url: "https://play.google.com/store/apps/details?id=com.akramhossain.islamicvideo&hl=en&gl=US",
+      img: "https://play-lh.googleusercontent.com/8Hz73nssIzVBwOfI5U5frPs4zAjTEsmgOFiAhJAzijyb8kIHW80WNC0r4rGhz1OQrA=w240-h480"
     },
   ];
 
@@ -154,6 +155,11 @@ export class QuranIndexComponent implements OnInit {
         if (data) {
           this.surahList = data;
         }
+
+        const tags = response.body.tags;
+        if (tags) {
+          this.tagList = tags;
+        }
       });
 
     const recentlyReadList = this.getRecentlyOpenItems();
@@ -197,8 +203,8 @@ export class QuranIndexComponent implements OnInit {
       content: "Quran, Al-Quran Al-Kareem, Al-Ketab, Al-Furqan, Al-Maw'itha, Al-Thikr, and Al-Noor"
     })
     this.metaTagService.updateTag({
-      property:"og:url",
-      content:"http://quran.codxplore.com"
+      property: "og:url",
+      content: "http://quran.codxplore.com"
     })
 
   }
