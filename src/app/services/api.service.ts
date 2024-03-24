@@ -92,4 +92,18 @@ export class ApiService {
       }));
   }
 
+  getDuaTagList(getParams?: any) {
+    return this.configService.readRequest(this.baseRoute + '/dua-zikr-tags.php', getParams)
+      .pipe(map(response => {
+        return response;
+      }));
+  }
+
+  getDuaList(getParams?: any) {
+    return this.configService.readRequest(this.baseRoute + '/dua-zikr-list.php', getParams)
+      .pipe(map(response => {
+        return response;
+      }));
+  }
+
 }

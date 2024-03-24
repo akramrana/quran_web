@@ -1,0 +1,58 @@
+<div class="p-4 p-md-5 mt-4 mb-4 rounded text-bg-dark bg-gradient-greenish">
+    <div class="col-md-12 px-0 text-center">
+        <h1 class="display-4 fst-italic indo-arabic-font text-capitalize">{{name}}</h1>
+        <p class="lead my-3 text-capitalize">Dua and Zikr: {{name}}</p>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-sm-12 col-lg-12">
+        <div class="card mb-2" *ngFor="let row of duaList;">
+            <div class="card-header" id="target{{row.dua_zikr_id}}">
+                {{row.name_en}}: {{row.name_bn}}
+            </div>
+            <div class="card-body">
+                <p class="card-text fs-3 indo-arabic-font" dir="rtl">
+                    {{row.arabic}}
+                </p>
+
+                <p class="card-text text-danger mt-3 fs-6" [innerHTML]="row.transliteration_en"></p>
+
+                <p class="card-text bangla-font text-danger mt-3 fs-6" [innerHTML]="row.transliteration_bn"></p>
+
+                <p class="card-text mt-3 fs-6">{{row.translations_en}}</p>
+
+                <p class="card-text bangla-font mt-3 fs-6">{{row.translations_bn}}</p>
+
+                <p class="card-title mt-3 fs-6">{{row.text_en}}</p>
+
+                <p class="mt-5 fs-6 text-center text-danger">
+                    Reference:
+                    <br />
+                    <small>
+                        {{row.reference_en}}
+                    </small>
+                    <br />
+                    <small>
+                        {{row.reference_bn}}
+                    </small>
+                </p>
+
+                <div class="text-center">
+                    <button title="Copy" class="btn btn-outline-secondary me-2"
+                        (click)="copyTextToClipboard(row)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-clipboard" viewBox="0 0 16 16">
+                            <path
+                                d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                            <path
+                                d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                        </svg>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

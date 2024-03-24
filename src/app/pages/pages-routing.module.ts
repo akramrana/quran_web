@@ -37,6 +37,11 @@ const routes: Routes = [
         loadChildren: () => import('./references/references.module')
           .then(m => m.ReferencesModule),
       },
+      {
+        path: 'dua-zikr',
+        loadChildren: () => import('./dua-zikr/dua-zikr.module')
+          .then(m => m.DuaZikrModule),
+      },
     ],
   },
 ];
